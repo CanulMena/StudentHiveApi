@@ -31,7 +31,7 @@ public class RentalHouseController : ControllerBase
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
-    {
+    {       //entity RentalHouse
         var rentalHouse = await _rentalHouseService.GetById(id);
         if (rentalHouse.IdPublication <= 0)
         {

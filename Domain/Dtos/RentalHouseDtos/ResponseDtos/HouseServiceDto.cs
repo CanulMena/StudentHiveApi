@@ -3,7 +3,7 @@ namespace StudentHive.Domain.Dtos;
 
     public class HouseServiceDTO
     {
-        public int ID_HouseService { get; set; }
+        public int IdHouseService { get; set; }
         public bool Wifi { get; set; }
         public bool Kitchen { get; set; }
         public bool Washer { get; set; }

@@ -4,7 +4,7 @@ namespace StudentHive.Domain.Dtos;
 
 public class HouseLocationDTO
     {
-        public int ID_Location { get; set; }
+        public int IdLocation { get; set; }
         public string Address { get; set; } = null!;
         public string City { get; set; } = null!;
         public string State { get; set; } = null!;

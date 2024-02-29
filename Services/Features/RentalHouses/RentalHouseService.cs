@@ -20,7 +20,7 @@ public class RentalHouseService
     }
 
     public async Task<RentalHouse> GetById(int id)
-    {
+    {   // validation entity RentalHouse
         var rentalHouse = await _rentalHouseRepository.GetById(id);
 
         if (rentalHouse == null)

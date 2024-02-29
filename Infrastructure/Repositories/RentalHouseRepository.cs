@@ -69,7 +69,12 @@ public class RentalHouseRepository
 
 public async Task Delete(int id)
 {
-    var rentalHouse = await _context.RentalHouses.Include(r => r.Images).FirstOrDefaultAsync(r => r.IdPublication == id);
+    var rentalHouse = await _context.RentalHouses
+    .Include(r => r.Images)
+    .Include(r => r.IdLocationNavigation)
+    .Include(r => r.IdRentalHouseDetailNavigation)
+    .Include(r => r.IdTypeReportNavigation)
+    .FirstOrDefaultAsync(r => r.IdPublication == id);
     if (rentalHouse != null)
     {
         _context.Images.RemoveRange(rentalHouse.Images);

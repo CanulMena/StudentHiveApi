@@ -8,6 +8,8 @@ public class UserUpdateDTO
 
     public long? PhoneNumber { get; set; }
 
-    public string? ProfilePhotoUrl { get; set; }
+    // public string? ProfilePhotoUrl { get; set; }
+
+    public IFormFile? Image { get; set; }
 
 }

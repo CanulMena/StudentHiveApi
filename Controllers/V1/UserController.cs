@@ -130,13 +130,28 @@ namespace StudentHive.Controllers.V1
                 return NotFound("User not found");
             }
 
+            // Check if a new image is provided
+            if (updateUserDto.Image != null)
+            {
+                // Upload the new image to Cloudinary
+                var newImageUrl = await _imageUploadService.UploadImageAsync(updateUserDto.Image);
+
+                // Delete the previous image from Cloudinary if it exists
+                if (!string.IsNullOrEmpty(user.ProfilePhotoUrl))
+                {
+                    await _imageUploadService.DeleteImageAsync(user.ProfilePhotoUrl);
+                }
+
+                // Update the user's profile photo URL with the new one
+                user.ProfilePhotoUrl = newImageUrl;
+            }
+
             // Map only the properties that are not null in updateUserDto to the user entity
             _mapper.Map(updateUserDto, user);
 
             await _usersService.Update(user);
             return NoContent();
         }
-
 
     }
 }

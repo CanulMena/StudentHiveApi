@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using CloudinaryDotNet;
 using System.Security.Claims;
 using System.Text;
+using StudentHive.Services.Features.RentalHouses;
+using StudentHive.Services.Features.Administradors;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,9 +30,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
+// user services
 builder.Services.AddScoped<UsersService>();  
 builder.Services.AddTransient<UserRepository>(); 
+
+// rental house services
+builder.Services.AddScoped<RentalHouseService>();
+builder.Services.AddTransient<RentalHouseRepository>();
+
+// admin services
+builder.Services.AddScoped<AdministradorService>();
+builder.Services.AddTransient<AdministradorRepository>();
 
 builder.Services.AddScoped<PasswordHasher>(); 
 

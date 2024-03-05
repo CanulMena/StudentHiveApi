@@ -1,76 +1,144 @@
-// using AutoMapper;
-// using Microsoft.AspNetCore.Mvc;
-// using StudentHive.Domain.Dtos;
-// using StudentHive.Domain.Entities;
-// using StudentHive.Services.Features.RentalHouses;
+using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using StudentHive.Domain.Dtos;
+using StudentHive.Domain.Entities;
+using StudentHive.Infrastructure.Repositories;
+using StudentHive.Services.Features.CoudinaryRentalHouses;
+using StudentHive.Services.Features.RentalHouses;
 
-// namespace StudentHive.Controller.V1
-// {
-//     [ApiController]
-//     [Route("api/[controller]")]
-//     public class RentalHouseController : ControllerBase //with the api controller we use the services and we can use http petitions 
-//     {
-//         public readonly RentalHouseService _rentalHouseService;
-//             public readonly IMapper _mapper;
+namespace StudentHive.Controllers.V1;
 
-//         public RentalHouseController( RentalHouseService rentalHouseService, IMapper mapper )
-//         {
-//             this._rentalHouseService = rentalHouseService;
-//             this._mapper = mapper;
-//         }
+[ApiController]
+[Route("api/v1/[controller]")]
+public class RentalHouseController : ControllerBase
+{
+    private readonly RentalHouseService _rentalHouseService;
+    private readonly IMapper _mapper;
+    private readonly CloudinaryRentalHouse _coudinaryRentalHouse;
 
-//         [HttpGet]
-//         public async Task<IActionResult> GetAll()
-//         {
-//             var rentalHouses = await _rentalHouseService.GetAll();
+    public RentalHouseController(RentalHouseService rentalHouseService, IMapper mapper,CloudinaryRentalHouse coudinaryRentalHouse)
+    {
+        this._rentalHouseService = rentalHouseService;
+        this._coudinaryRentalHouse = coudinaryRentalHouse;
+        this._mapper = mapper;
+    }
 
-//             var rentalHouseServiceDtos = _mapper.Map<IEnumerable<RentalHouseDTO>>(rentalHouses);
-//             return Ok( rentalHouseServiceDtos ); 
-//         }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var publications = await _rentalHouseService.GetAll();
+        var publicationDtos = _mapper.Map<IEnumerable<PublicationDtos>>(publications);
+        return Ok(publicationDtos);
+    }
 
-//         [HttpGet("{id}")]
-//         public async Task<IActionResult> GetById(int id)
-//         {
-//             var RentalHouse = await _rentalHouseService.GetById(id); 
-//             if( RentalHouse.IdPublication <= 0  ) 
-//             return NotFound();
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {       //entity RentalHouse
+        var rentalHouse = await _rentalHouseService.GetById(id);
+        if (rentalHouse.IdPublication <= 0)
+        {
+            return NotFound();
+        }
 
-//             var RentalHouseDto = _mapper.Map<RentalHouseDTO>( RentalHouse );
+        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDTO>(rentalHouse);
 
-//             return Ok( RentalHouseDto );
-//         }
+        return Ok(rentalHouseToRentalHouseDto);
+    }
 
-//         [HttpPost]
-//         public async Task<IActionResult> Add(RentalHouseCreateDTO RentalHouse) 
-//         {
-//             //*we need to add the new id of de new RentalHouse
-//             var RentalHouseCreateDtoToEntity = _mapper.Map<RentalHouse>(RentalHouse);
-//             RentalHouse RentalHouseEntity = RentalHouseCreateDtoToEntity;
+    [HttpGet("user/{id}")]
+    public async Task<IActionResult> GetByUserId(int id)
+    {
+        var rentalHouse = await _rentalHouseService.GetByUserId(id);
+        if (rentalHouse.IdPublication <= 0)
+        {
+            return NotFound();
+        }
 
-//             await _rentalHouseService.Add(RentalHouseEntity);
+        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDTO>(rentalHouse);
 
-//             var rentalHouseDto = _mapper.Map<RentalHouseDTO>(RentalHouseEntity);
+        return Ok(rentalHouseToRentalHouseDto);
+    }
 
-//             return CreatedAtAction( nameof( GetById ), new { id = RentalHouseEntity.IdPublication }, rentalHouseDto);
+    [HttpPost]
+    public async Task<IActionResult> Add( RentalHouseCreateDto rentalHouseCreateDto)
+    {   
+        var entity = _mapper.Map<RentalHouse>(rentalHouseCreateDto);
+        //Subir todas las imagenes
+        for (int i = 0; i < rentalHouseCreateDto.ImagesFiles.Count; i++)
+        {
+        var image = rentalHouseCreateDto.ImagesFiles[i];
+            Console.WriteLine(image);
+        if (image?.Length > 0)
+        {
+            var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+            entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+        }
+}
 
-//         }
+        await _rentalHouseService.Add(entity);
 
-//         [HttpPut]
-//         public async Task<IActionResult> Update( int id, RentalHouse rentalHouse )
-//         {
-//             if( id != rentalHouse.IdPublication)
-//                 return BadRequest();
+        var rentalHouseDto = _mapper.Map<RentalHouseDTO>(entity);
 
-//             await _rentalHouseService.update( rentalHouse ); 
-//             return NoContent();
-//         }
+        return CreatedAtAction(nameof(GetById), new { id = entity.IdPublication }, rentalHouseDto);
+    }
 
-//         [HttpDelete("{id}")] // this only define the route 
-//         public async Task<IActionResult> Delete( int id )  
-//         {
-//             await _rentalHouseService.Delete( id );
-//             return NoContent();
-//         }
-//     }
-// }
 
+[HttpPut]
+public async Task<IActionResult> Update(int id, RentalHouseUpdateDto rentalHouseUpdateDTO)
+{
+    var entity = await _rentalHouseService.GetById(id);
+    if (entity == null)
+    {
+        return NotFound();
+    }
+
+    _mapper.Map(rentalHouseUpdateDTO, entity);
+
+    // Delete existing images
+    if (rentalHouseUpdateDTO.ImagesFiles != null)
+    {
+        foreach (var image in entity.Images)
+        {
+            await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+        }
+        entity.Images.Clear();
+
+        // Upload new images
+        for (int i = 0; i < rentalHouseUpdateDTO.ImagesFiles.Count; i++)
+        {
+            var image = rentalHouseUpdateDTO.ImagesFiles[i];
+            if (image?.Length > 0)
+            {
+                var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+                entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+            }
+        }
+    }
+
+    await _rentalHouseService.Update(entity);
+
+    return NoContent();
+}
+
+[HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    var entity = await _rentalHouseService.GetById(id);
+    if (entity == null)
+    {
+        return NotFound();
+    }
+
+    // Delete images
+    foreach (var image in entity.Images)
+    {
+        await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+    }
+
+    await _rentalHouseService.Delete(id);
+
+    return NoContent();
+}
+
+}

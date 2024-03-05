@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using StudentHive.Services.Features.RentalHouses;
 using StudentHive.Services.Features.Administradors;
+using StudentHive.Services.Features.CoudinaryRentalHouses;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -95,6 +96,7 @@ Cloudinary cloudinary = new Cloudinary(account);
 
 builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped<ImageUploadService>();
+builder.Services.AddScoped<CloudinaryRentalHouse>();
 
 
 

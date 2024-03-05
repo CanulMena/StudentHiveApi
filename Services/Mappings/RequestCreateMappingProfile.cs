@@ -15,7 +15,7 @@ public class RequestCreateMappingProfile : Profile
         CreateMap<HouseServiceCreateDTO, HouseService>();//*Validated
         CreateMap<HouseLocationCreateDTO, Location>();//*Validated
         CreateMap<ImageRentalHouseCreateDTO, Image>();//*Validated
-
+        CreateMap<IFormFile, Image>();
 
         CreateMap<RentalHouseCreateDTO, RentalHouse>()            //*Validated
         .AfterMap

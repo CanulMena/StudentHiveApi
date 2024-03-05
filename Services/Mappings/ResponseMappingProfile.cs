@@ -13,6 +13,7 @@ public class ResponseMappingProfile : Profile
 
         //Publication
         CreateMap<RentalHouse, PublicationDtos>()
+        .ForMember(dest => dest.Image_Url_P, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.NameofUser, opt => opt.MapFrom(src => src.IdUserNavigation!.Name));
 
         //RentalHouse 

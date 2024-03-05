@@ -16,7 +16,7 @@ public class RentalHouseCreateDTO{
         public RentalHouseDetailCreateDTO DetailRentalHouse { get; set; } = null!;
         public HouseServiceCreateDTO HouseService { get; set; } = null!;
         public HouseLocationCreateDTO HouseLocation { get; set; } = null!;
-        public List<ImageRentalHouseCreateDTO> Images { get; set; } = new ();
+        public List<IFormFile?> ImagesFiles { get; set; } = [];
 }
 
 

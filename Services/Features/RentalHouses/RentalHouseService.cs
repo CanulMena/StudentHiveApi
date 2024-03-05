@@ -1,6 +1,7 @@
 using AutoMapper;
 using StudentHive.Domain.Entities;
 using StudentHive.Infrastructure.Repositories;
+using StudentHive.Services.Features.CoudinaryRentalHouses;
 
 namespace StudentHive.Services.Features.RentalHouses;
 
@@ -20,6 +21,17 @@ public class RentalHouseService
     }
 
     public async Task<RentalHouse> GetById(int id)
+    {   // validation entity RentalHouse
+        var rentalHouse = await _rentalHouseRepository.GetById(id);
+
+        if (rentalHouse == null)
+        {
+            throw new InvalidOperationException($"RentalHouse with ID {id} not found.");
+        }
+
+        return rentalHouse;
+    }
+     public async Task<RentalHouse> GetByIdAdd(int id)
     {   // validation entity RentalHouse
         var rentalHouse = await _rentalHouseRepository.GetById(id);
 

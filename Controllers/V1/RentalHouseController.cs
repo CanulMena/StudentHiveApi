@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Entities;
 using StudentHive.Infrastructure.Repositories;
+using StudentHive.Services.Features.CoudinaryRentalHouses;
 using StudentHive.Services.Features.RentalHouses;
 
 namespace StudentHive.Controllers.V1;
@@ -14,10 +15,12 @@ public class RentalHouseController : ControllerBase
 {
     private readonly RentalHouseService _rentalHouseService;
     private readonly IMapper _mapper;
+    private readonly CloudinaryRentalHouse _coudinaryRentalHouse;
 
-    public RentalHouseController(RentalHouseService rentalHouseService, IMapper mapper)
+    public RentalHouseController(RentalHouseService rentalHouseService, IMapper mapper,CloudinaryRentalHouse coudinaryRentalHouse)
     {
         this._rentalHouseService = rentalHouseService;
+        this._coudinaryRentalHouse = coudinaryRentalHouse;
         this._mapper = mapper;
     }
 
@@ -58,9 +61,20 @@ public class RentalHouseController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(RentalHouseCreateDTO rentalHouseCreateDto)
-    {
+    public async Task<IActionResult> Add( RentalHouseCreateDTO rentalHouseCreateDto)
+    {   
         var entity = _mapper.Map<RentalHouse>(rentalHouseCreateDto);
+        //Subir todas las imagenes
+        for (int i = 0; i < rentalHouseCreateDto.ImagesFiles.Count; i++)
+        {
+        var image = rentalHouseCreateDto.ImagesFiles[i];
+            Console.WriteLine(image);
+        if (image?.Length > 0)
+        {
+            var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+            entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+        }
+}
 
         await _rentalHouseService.Add(entity);
 
@@ -69,23 +83,62 @@ public class RentalHouseController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = entity.IdPublication }, rentalHouseDto);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Update(int id, RentalHouseCreateDTO rentalHouseCreateDto)
+
+[HttpPut]
+public async Task<IActionResult> Update(int id, RentalHouseUpdateDTO rentalHouseUpdateDTO)
+{
+    var entity = await _rentalHouseService.GetById(id);
+    if (entity == null)
     {
-        var entity = _mapper.Map<RentalHouse>(rentalHouseCreateDto);
-        entity.IdPublication = id;
-
-        await _rentalHouseService.Update(entity);
-
-        return NoContent();
+        return NotFound();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        await _rentalHouseService.Delete(id);
+    _mapper.Map(rentalHouseUpdateDTO, entity);
 
-        return NoContent();
+    // Delete existing images
+    if (rentalHouseUpdateDTO.ImagesFiles != null)
+    {
+        foreach (var image in entity.Images)
+        {
+            await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+        }
+        entity.Images.Clear();
+
+        // Upload new images
+        for (int i = 0; i < rentalHouseUpdateDTO.ImagesFiles.Count; i++)
+        {
+            var image = rentalHouseUpdateDTO.ImagesFiles[i];
+            if (image?.Length > 0)
+            {
+                var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+                entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+            }
+        }
     }
+
+    await _rentalHouseService.Update(entity);
+
+    return NoContent();
+}
+
+[HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    var entity = await _rentalHouseService.GetById(id);
+    if (entity == null)
+    {
+        return NotFound();
+    }
+
+    // Delete images
+    foreach (var image in entity.Images)
+    {
+        await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+    }
+
+    await _rentalHouseService.Delete(id);
+
+    return NoContent();
+}
 
 }

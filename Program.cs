@@ -8,10 +8,10 @@ using StudentHive.Controllers.V1;
 using StudentHive.Services.Features.Administradors;
 using StudentHive.Services.Features.RentalHouses;
 using CloudinaryDotNet;
+using StudentHive.Services.Features.CoudinaryRentalHouses;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 var Configuration = builder.Configuration;
 
 //*Add services container services
@@ -45,6 +45,7 @@ var cloudinarySettings = builder.Configuration.GetSection("Cloudinary");
         cloudinarySettings["ApiSecret"]
     );
     Cloudinary cloudinary = new Cloudinary(account);
+    builder.Services.AddScoped<CloudinaryRentalHouse>();
 
     builder.Services.AddSingleton(cloudinary);
     

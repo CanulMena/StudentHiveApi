@@ -41,7 +41,7 @@ public class RentalHouseController : ControllerBase
             return NotFound();
         }
 
-        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDTO>(rentalHouse);
+        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDto>(rentalHouse);
 
         return Ok(rentalHouseToRentalHouseDto);
     }
@@ -55,7 +55,7 @@ public class RentalHouseController : ControllerBase
             return NotFound();
         }
 
-        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDTO>(rentalHouse);
+        var rentalHouseToRentalHouseDto = _mapper.Map<RentalHouseDto>(rentalHouse);
 
         return Ok(rentalHouseToRentalHouseDto);
     }
@@ -78,7 +78,7 @@ public class RentalHouseController : ControllerBase
 
         await _rentalHouseService.Add(entity);
 
-        var rentalHouseDto = _mapper.Map<RentalHouseDTO>(entity);
+        var rentalHouseDto = _mapper.Map<RentalHouseDto>(entity);
 
         return CreatedAtAction(nameof(GetById), new { id = entity.IdPublication }, rentalHouseDto);
     }

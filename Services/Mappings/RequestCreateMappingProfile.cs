@@ -17,13 +17,13 @@ public class RequestCreateMappingProfile : Profile
 
 
         CreateMap<RentalHouse, PublicationDtos>();
-        CreateMap<RentalHouseDetailCreateDTO, RentalHouseDetail>();//*Validated
-        CreateMap<HouseServiceCreateDTO, HouseService>();//*Validated
-        CreateMap<HouseLocationCreateDTO, Location>();//*Validated
+        CreateMap<RentalHouseDetailCreateDto, RentalHouseDetail>();//*Validated
+        CreateMap<HouseServiceCreateDto, HouseService>();//*Validated
+        CreateMap<HouseLocationCreateDto, Location>();//*Validated
         CreateMap<ImageRentalHouseCreateDTO, Image>();//*Validated
         CreateMap<IFormFile, Image>();
 
-        CreateMap<RentalHouseCreateDTO, RentalHouse>()            //*Validated
+        CreateMap<RentalHouseCreateDto, RentalHouse>()            //*Validated
         .AfterMap
         (
             (src, dest) => 

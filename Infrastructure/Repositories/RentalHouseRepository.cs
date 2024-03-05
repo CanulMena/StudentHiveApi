@@ -30,10 +30,10 @@ public class RentalHouseRepository
         var rentalHouse = await _context.RentalHouses
         .Include(r => r.IdHouseServiceNavigation)
         .Include(r => r.Images)
-        .Include(r => r.Requests)
+        // .Include(r => r.Requests)
         .Include(r => r.IdLocationNavigation)
         .Include(r => r.IdRentalHouseDetailNavigation)
-        .Include(r => r.IdTypeReportNavigation)
+        // .Include(r => r.IdTypeReportNavigation)
         .Include(r => r.IdUserNavigation)
         
         .FirstOrDefaultAsync(rentalHouse => rentalHouse.IdPublication == id);
@@ -67,13 +67,19 @@ public class RentalHouseRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+public async Task Delete(int id)
+{
+    var rentalHouse = await _context.RentalHouses
+    .Include(r => r.Images)
+    .Include(r => r.IdLocationNavigation)
+    .Include(r => r.IdRentalHouseDetailNavigation)
+    .Include(r => r.IdTypeReportNavigation)
+    .FirstOrDefaultAsync(r => r.IdPublication == id);
+    if (rentalHouse != null)
     {
-        var rentalHouse = await _context.RentalHouses.FirstOrDefaultAsync(r => r.IdPublication == id);
-        if (rentalHouse != null)
-        {
-            _context.RentalHouses.Remove(rentalHouse);
-            await _context.SaveChangesAsync();
-        }
+        _context.Images.RemoveRange(rentalHouse.Images);
+        _context.RentalHouses.Remove(rentalHouse);
+        await _context.SaveChangesAsync();
     }
+}
 }

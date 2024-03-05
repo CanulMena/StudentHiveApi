@@ -15,7 +15,7 @@ public class RequestCreateMappingProfile : Profile
         CreateMap<HouseServiceCreateDTO, HouseService>();//*Validated
         CreateMap<HouseLocationCreateDTO, Location>();//*Validated
         CreateMap<ImageRentalHouseCreateDTO, Image>();//*Validated
-
+        CreateMap<IFormFile, Image>();
 
         CreateMap<RentalHouseCreateDTO, RentalHouse>()            //*Validated
         .AfterMap
@@ -24,7 +24,11 @@ public class RequestCreateMappingProfile : Profile
                 {
                     dest.PublicationDate = DateTime.Now;
                 }
-        );//UserCreateDTO => User
+        )
+        .ForMember(dest => dest.IdHouseServiceNavigation, opt => opt.MapFrom(src => src.HouseService))
+        .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.HouseLocation))
+        .ForMember(dest => dest.IdRentalHouseDetailNavigation, opt => opt.MapFrom(src => src.DetailRentalHouse));
+        //UserCreateDTO => User
         
         //Administrador
         CreateMap<Administrador, MasterDto>();

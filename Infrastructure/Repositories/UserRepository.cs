@@ -17,12 +17,12 @@ public class UserRepository
     public async Task<IEnumerable<User>> GetAll()
     { //only returns users<Users>
         var users = await _context.Users
-        .Include(u => u.RentalHouses) // Incluye las casas en alquiler asociadas a cada usuario
-        .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdHouseServiceNavigation) // Incluye los servicios de cada casa en alquiler
-        .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdLocationNavigation) // Incluye las ubicaciones de cada casa en alquiler
-        .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdRentalHouseDetailNavigation) // Incluye los detalles de alquiler de cada casa en alquiler
-        .Include(u => u.RentalHouses).ThenInclude(rh => rh.Images) // Incluye las imágenes de cada casa en alquiler
-        .Include(u => u.IdRolNavigation) //no tuve que especificar algo como tal, pues ya esta en sus campos del idRolNavigation
+        // .Include(u => u.RentalHouses) // Incluye las casas en alquiler asociadas a cada usuario
+        // .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdHouseServiceNavigation) // Incluye los servicios de cada casa en alquiler
+        // .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdLocationNavigation) // Incluye las ubicaciones de cada casa en alquiler
+        // .Include(u => u.RentalHouses).ThenInclude(rh => rh.IdRentalHouseDetailNavigation) // Incluye los detalles de alquiler de cada casa en alquiler
+        // .Include(u => u.RentalHouses).ThenInclude(rh => rh.Images) // Incluye las imágenes de cada casa en alquiler
+        // .Include(u => u.IdRolNavigation) //no tuve que especificar algo como tal, pues ya esta en sus campos del idRolNavigation
         .ToListAsync();
 
     return users;
@@ -35,11 +35,11 @@ public class UserRepository
         ThenInclude para poder llamarlas de igual menera  
         *al final solo filstro que me regrese el primer usuario que tenga el mismo id que agregue como parametro */
         var user = await _context.Users
-            .Include(u => u.RentalHouses) /* --> */
-            .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdHouseServiceNavigation) /* --> */
-            .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdLocationNavigation) /* --> */
-            .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdRentalHouseDetailNavigation) /* --> */
-            .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.Images) /* --> */
+            // .Include(u => u.RentalHouses) /* --> */
+            // .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdHouseServiceNavigation) /* --> */
+            // .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdLocationNavigation) /* --> */
+            // .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.IdRentalHouseDetailNavigation) /* --> */
+            // .Include(u => u.RentalHouses).ThenInclude(listRH => listRH.Images) /* --> */
             .FirstOrDefaultAsync(u => u.IdUser == id);
 
         return user ?? new User();

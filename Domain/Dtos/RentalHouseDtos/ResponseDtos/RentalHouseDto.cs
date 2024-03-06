@@ -24,15 +24,15 @@ public class RentalHouseDto
 
         public int? IdHouseService { get; set; }
 
-        public virtual HouseServiceDTO? IdHouseServiceNavigation { get; set; }
+        public virtual HouseServiceDto? IdHouseServiceNavigation { get; set; }
 
-        public virtual HouseLocationDTO? IdLocationNavigation { get; set; }
+        public virtual HouseLocationDto? IdLocationNavigation { get; set; }
         
         public virtual UserDTO? IdUserNavigation { get; set; }
 
-        public virtual RentalHouseDetailDTO? IdRentalHouseDetailNavigation { get; set; }
+        public virtual RentalHouseDetailDto? IdRentalHouseDetailNavigation { get; set; }
 
-        public virtual List<ImageRentalHouseDTO> Images { get; set; } = new ();
+        public virtual List<ImageRentalHouseDto> Images { get; set; } = new ();
         
 }
 

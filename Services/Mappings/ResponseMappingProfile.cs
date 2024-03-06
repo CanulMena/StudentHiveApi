@@ -10,11 +10,11 @@ public class ResponseMappingProfile : Profile
     public ResponseMappingProfile() //this is how I want my entity to be transformed into a DTO
     {       //User => UserDTO
         CreateMap<User,UserDTO>();
-        CreateMap<RentalHouse,UserRentalHouseDTO>();
-        CreateMap<HouseService,HouseServiceDTO>();
-        CreateMap<Location,HouseLocationDTO>();
-        CreateMap<RentalHouseDetail,RentalHouseDetailDTO>();
-        CreateMap<Image,ImageRentalHouseDTO>();
+        // CreateMap<RentalHouse,UserRentalHouseDTO>();
+        // CreateMap<HouseService,HouseServiceDTO>();
+        // CreateMap<Location,HouseLocationDTO>();
+        // CreateMap<RentalHouseDetail,RentalHouseDetailDTO>();
+        // CreateMap<Image,ImageRentalHouseDTO>();
 
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()

@@ -16,5 +16,5 @@ public class UserDTO
     public byte? Genderu { get; set; }
     // public string? Token { get; set; }
     public int? IdRol { get; set; }
-    public virtual List<UserRentalHouseDTO> RentalHouses { get; set; } = new();
+    // public virtual List<UserRentalHouseDto> RentalHouses { get; set; } = new();
 }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Entities;
-using StudentHive.Infrastructure.Repositories;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
 using StudentHive.Services.Features.RentalHouses;
 

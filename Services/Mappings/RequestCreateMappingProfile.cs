@@ -12,7 +12,7 @@ public class RequestCreateMappingProfile : Profile
         CreateMap<UserCreateDTO, User>()
         .ForMember(dest => dest.IdRol, opt => opt.MapFrom(src => 1));
         
-        CreateMap<RentalHouseCreateDTO, RentalHouse>()
+        CreateMap<RentalHouseCreateDto, RentalHouse>()
         .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.HouseLocation));
 
 

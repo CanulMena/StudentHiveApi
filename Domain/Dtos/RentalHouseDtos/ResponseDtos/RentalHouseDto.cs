@@ -3,6 +3,8 @@ namespace StudentHive.Domain.Dtos;
 public class RentalHouseDto
 { /* It's just for transferring data */
         public int IdPublication { get; set; }
+        public int  IdUser { get; set; }
+
 
         public string Title { get; set; } = null!;
 
@@ -28,11 +30,10 @@ public class RentalHouseDto
 
         public virtual HouseLocationDto? IdLocationNavigation { get; set; }
         
-        public virtual UserDTO? IdUserNavigation { get; set; }
 
         public virtual RentalHouseDetailDto? IdRentalHouseDetailNavigation { get; set; }
 
-        public virtual List<ImageRentalHouseDto> Images { get; set; } = new ();
+        public virtual List<string> Images { get; set; } = new ();
         
 }
 

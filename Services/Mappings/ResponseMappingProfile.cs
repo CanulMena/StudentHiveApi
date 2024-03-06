@@ -18,16 +18,16 @@ public class ResponseMappingProfile : Profile
 
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()
-        .ForMember(dest => dest.Image_Url_P, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.NameofUser, opt => opt.MapFrom(src => src.IdUserNavigation!.Name));
 
         //RentalHouse 
         CreateMap<RentalHouse, RentalHouseDto>()
         .ForMember(dest => dest.IdHouseServiceNavigation, opt => opt.MapFrom(src => src.IdHouseServiceNavigation))
         .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.IdLocationNavigation))
-        .ForMember(dest => dest.IdUserNavigation, opt => opt.MapFrom(src => src.IdUserNavigation))
+        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
         .ForMember(dest => dest.IdRentalHouseDetailNavigation, opt => opt.MapFrom(src => src.IdRentalHouseDetailNavigation))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images));
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()));
 
         CreateMap<HouseService, HouseServiceDto>();
         CreateMap<Location, HouseLocationDto>();

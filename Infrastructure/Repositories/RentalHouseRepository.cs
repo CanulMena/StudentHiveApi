@@ -13,16 +13,21 @@ public class RentalHouseRepository
     }
 
     //Vista previa de publicaciones
-    public async Task<IEnumerable<RentalHouse>> GetAll()
-    {
-        var rentalHouses = await _context.RentalHouses
-            .Include(r => r.IdHouseServiceNavigation)
-            .Include(r => r.Images)
-            .Include(r => r.IdLocationNavigation)
-            .Include(r => r.IdUserNavigation)
-            .ToListAsync();
-        return rentalHouses;
-    }
+public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> GetAll(int pageNumber = 1, int pageSize = 10)
+{
+    var totalCount = await _context.RentalHouses.CountAsync();
+    var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+    var items = await _context.RentalHouses
+        .Include(r => r.IdHouseServiceNavigation)
+        .Include(r => r.Images)
+        .Include(r => r.IdLocationNavigation)
+        .Include(r => r.IdUserNavigation)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+    return (items, totalCount, totalPages);
+}
 
     //aqui se va a ver todo lo que contiene rentalHouse
     public async Task<RentalHouse> GetById(int id)

@@ -24,13 +24,19 @@ public class RentalHouseController : ControllerBase
         this._mapper = mapper;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+[HttpGet]
+public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
+{
+    var result = await _rentalHouseService.GetAll(pageNumber, pageSize);
+    var response = new
     {
-        var publications = await _rentalHouseService.GetAll();
-        var publicationDtos = _mapper.Map<IEnumerable<PublicationDtos>>(publications);
-        return Ok(publicationDtos);
-    }
+        page = pageNumber,
+        results = _mapper.Map<IEnumerable<PublicationDtos>>(result.Items),
+        total_pages = result.TotalPages,
+        total_results = result.TotalCount
+    };
+    return Ok(response);
+}
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)

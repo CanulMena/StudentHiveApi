@@ -13,11 +13,10 @@ public class RentalHouseService
         this._rentalHouseRepository = rentalHouseRepository;
     }
 
-    public async Task<IEnumerable<RentalHouse>> GetAll()
-    {
-        var rentalHouses = await _rentalHouseRepository.GetAll();
-        return rentalHouses;
-    }
+public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> GetAll(int pageNumber = 1, int pageSize = 10)
+{
+    return await _rentalHouseRepository.GetAll(pageNumber, pageSize);
+}
 
     public async Task<RentalHouse> GetById(int id)
     {   // validation entity RentalHouse

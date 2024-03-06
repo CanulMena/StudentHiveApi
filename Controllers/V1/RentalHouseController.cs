@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
+using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
 using StudentHive.Services.Features.RentalHouses;
@@ -23,19 +24,27 @@ public class RentalHouseController : ControllerBase
         this._mapper = mapper;
     }
 
-[HttpGet]
-public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
-{
-    var result = await _rentalHouseService.GetAll(pageNumber, pageSize);
-    var response = new
+    [HttpGet("Publications")]
+    public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
     {
-        page = pageNumber,
-        results = _mapper.Map<IEnumerable<PublicationDtos>>(result.Items),
-        total_pages = result.TotalPages,
-        total_results = result.TotalCount
-    };
-    return Ok(response);
-}
+        var result = await _rentalHouseService.GetAll(pageNumber, pageSize);
+        var response = new
+        {
+            page = pageNumber,
+            results = _mapper.Map<IEnumerable<PublicationDtos>>(result.Items),
+            total_pages = result.TotalPages,
+            total_results = result.TotalCount
+        };
+        return Ok(response);
+    }
+
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetAllFilter([FromQuery] QueryRentalHouse queryRentalHouse)
+    {
+        var rentalHouse = await _rentalHouseService.GetAllFilter(queryRentalHouse);
+        var rentalHouseToRentalHouseDto = _mapper.Map<IEnumerable<RentalHouseDto>>(rentalHouse);
+        return Ok(rentalHouseToRentalHouseDto);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
@@ -89,42 +98,42 @@ public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
     }
 
 
-[HttpPut]
-public async Task<IActionResult> Update(int id, RentalHouseUpdateDto rentalHouseUpdateDTO)
-{
-    var entity = await _rentalHouseService.GetById(id);
-    if (entity == null)
+    [HttpPut]
+    public async Task<IActionResult> Update(int id, RentalHouseUpdateDto rentalHouseUpdateDTO)
     {
-        return NotFound();
-    }
-
-    _mapper.Map(rentalHouseUpdateDTO, entity);
-
-    // Delete existing images
-    if (rentalHouseUpdateDTO.ImagesFiles != null)
-    {
-        foreach (var image in entity.Images)
+        var entity = await _rentalHouseService.GetById(id);
+        if (entity == null)
         {
-            await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+            return NotFound();
         }
-        entity.Images.Clear();
 
-        // Upload new images
-        for (int i = 0; i < rentalHouseUpdateDTO.ImagesFiles.Count; i++)
+        _mapper.Map(rentalHouseUpdateDTO, entity);
+
+        // Delete existing images
+        if (rentalHouseUpdateDTO.ImagesFiles != null)
         {
-            var image = rentalHouseUpdateDTO.ImagesFiles[i];
-            if (image?.Length > 0)
+            foreach (var image in entity.Images)
             {
-                var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
-                entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+                await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+            }
+            entity.Images.Clear();
+
+            // Upload new images
+            for (int i = 0; i < rentalHouseUpdateDTO.ImagesFiles.Count; i++)
+            {
+                var image = rentalHouseUpdateDTO.ImagesFiles[i];
+                if (image?.Length > 0)
+                {
+                    var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+                    entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+                }
             }
         }
+
+        await _rentalHouseService.Update(entity);
+
+        return NoContent();
     }
-
-    await _rentalHouseService.Update(entity);
-
-    return NoContent();
-}
 
 [HttpDelete("{id}")]
 public async Task<IActionResult> Delete(int id)

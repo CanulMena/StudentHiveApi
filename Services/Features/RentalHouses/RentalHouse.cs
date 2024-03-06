@@ -1,4 +1,5 @@
 using AutoMapper;
+using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
 using StudentHive.Infrastructure.Repositories;
 
@@ -13,10 +14,20 @@ public class RentalHouseService
         this._rentalHouseRepository = rentalHouseRepository;
     }
 
-public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> GetAll(int pageNumber = 1, int pageSize = 10)
-{
-    return await _rentalHouseRepository.GetAll(pageNumber, pageSize);
-}
+    public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> GetAll(int pageNumber = 1, int pageSize = 10)
+    {
+        return await _rentalHouseRepository.GetAll(pageNumber, pageSize);
+    }
+
+    public async Task<IEnumerable<RentalHouse>> GetAllFilter(QueryRentalHouse queryRentalHouse)
+    {
+        return await _rentalHouseRepository.GetAllFilter(queryRentalHouse);
+    }
+
+    public async Task<int> GetTotalRentalHouses(int id)
+    {
+        return await _rentalHouseRepository.GetTotalRentalHouses(id);
+    }
 
     public async Task<RentalHouse> GetById(int id)
     {   // validation entity RentalHouse

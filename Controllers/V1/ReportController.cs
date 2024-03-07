@@ -32,7 +32,7 @@ public class ReportController : ControllerBase
         if (reportDtos == null)
         {
             return NotFound();
-            
+
         }
         return Ok(reportDtos);
     }
@@ -51,7 +51,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(CreateRreportDTO createRreportDTO) 
+    public async Task<IActionResult> Add(CreateReportDTO createRreportDTO) 
     {
         var entity = _mapper.Map<Report>(createRreportDTO);
 

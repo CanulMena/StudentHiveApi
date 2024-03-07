@@ -16,10 +16,11 @@ public partial class RentalHouseRepository
 
     //Vista previa de publicaciones
 
-public async Task<IEnumerable<RentalHouse>> GetAllFilter( QueryRentalHouse queryRentalHouse)
+public async Task<IEnumerable<RentalHouse>> GetAllFilter(QueryRentalHouse queryRentalHouse)
 {
     var query = _context.RentalHouses
     .Include(r => r.IdHouseServiceNavigation)
+    .Include(r => r.Images)
     .Include(r => r.IdLocationNavigation)
     .Include(r => r.IdRentalHouseDetailNavigation)
     .AsQueryable()

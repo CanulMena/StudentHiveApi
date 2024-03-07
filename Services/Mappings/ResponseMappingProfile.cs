@@ -19,10 +19,7 @@ public class ResponseMappingProfile : Profile
 
         //Reportes 
         CreateMap<Report, ReportDTO>()
-        .ForMember(dest => dest.IdUserNavigation, opt => opt.MapFrom(src => src.IdUser))
-        .ForMember(dest => dest.IdReportTypeNavigation, opt => opt.MapFrom(src => src.IdReportType))
-        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication));
-
+        .ForMember(dest => dest.IdReportTypeNavigation, opt => opt.MapFrom(src => src.IdReportType));
 
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()

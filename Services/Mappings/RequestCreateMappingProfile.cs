@@ -24,10 +24,9 @@ public class RequestCreateMappingProfile : Profile
         CreateMap<IFormFile, Image>();
 
         //Mapeo del CreateReportDTO a Report
-        CreateMap<CreateReportDTO, Report>()//*Validated
-        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdRentalHouse))
-        .ForMember(dest => dest.IdReportType, opt => opt.MapFrom(src => src.IdTypeReport))
-        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser));
+        CreateMap<CreateReportDTO, Report>();
+        
+            // .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => new List<User> { new User { IdUser = src.IdUser } }));
 
         CreateMap<RentalHouseCreateDto, RentalHouse>()            //*Validated
         .AfterMap

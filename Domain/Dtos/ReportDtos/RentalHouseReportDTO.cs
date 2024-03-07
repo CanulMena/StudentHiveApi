@@ -1,8 +1,10 @@
 namespace StudentHive.Domain.Dtos;
 
-public class CreateReportDTO
+public class RentalHouseReportDTO
 {
-    public int IdReportType { get; set; }
+    public int IdPublication {get; set; }
 
     //  public string? TypeReportName { get; set; }
+
+
 }

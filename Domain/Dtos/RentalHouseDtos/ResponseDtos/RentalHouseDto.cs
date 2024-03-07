@@ -11,11 +11,13 @@ public class RentalHouseDto
         public string Description { get; set; } = null!;
 
         public bool Status { get; set; }
-
+        
+        // 'IAm', 'Family', 'Other People', 'Companions'
         public string WhoElse { get; set; } = null!;
 
         public long RentPrice { get; set; }
 
+        //'OwnHouse','SharedRoom','SingleRoom'
         public string TypeHouse { get; set; } = null!;
 
         public int? IdRentalHouseDetail { get; set; }
@@ -36,6 +38,8 @@ public class RentalHouseDto
         public virtual List<string> Images { get; set; } = new ();
         
 }
+
+
 
 
 

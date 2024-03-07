@@ -45,5 +45,20 @@ public class RequestCreateMappingProfile : Profile
                 dest.IdRol = 2;
             }
         );
+
+        //Request
+        CreateMap<CreateRequestDto, Request>()
+        .AfterMap(
+            (src, dest ) =>
+            {
+                dest.CreatedAt = DateTime.Now;
+            }
+        )
+        .AfterMap(
+            (src, dest) =>
+            {
+                dest.Status = "Pendiente";
+            }
+        );
     }
 }

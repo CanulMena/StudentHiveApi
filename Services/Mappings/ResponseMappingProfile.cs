@@ -41,7 +41,11 @@ public class ResponseMappingProfile : Profile
         CreateMap<Administrador, MasterDto>()
         .ForMember(dest => dest.NombreRol, opt => opt.MapFrom(src => src.IdRolNavigation!.NombreRol));
     
-        
+        //Request
+        CreateMap<Request, RequestDto>()
+        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
+        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublicationNavigation!.IdPublication))
+        ;    
 
     }
 }

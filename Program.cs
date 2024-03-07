@@ -13,6 +13,7 @@ using System.Text;
 using StudentHive.Services.Features.RentalHouses;
 using StudentHive.Services.Features.Administradors;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
+using StudentHive.Services.Features.Requests;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
+// Request services
+builder.Services.AddScoped<RequestService>();
+builder.Services.AddTransient<RequestRepository>();
 
 // user services
 builder.Services.AddScoped<UsersService>();  

@@ -58,7 +58,6 @@ public partial class StudentHiveDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ReservationConfirmedConfiguration());
         modelBuilder.ApplyConfiguration(new RolConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -13,6 +13,7 @@ using System.Text;
 using StudentHive.Services.Features.RentalHouses;
 using StudentHive.Services.Features.Administradors;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
+using StudentHive.Services.Features.Reports;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,10 @@ builder.Services.AddTransient<UserRepository>();
 // rental house services
 builder.Services.AddScoped<RentalHouseService>();
 builder.Services.AddTransient<RentalHouseRepository>();
+
+// report services
+builder.Services.AddScoped<ReportService>();
+builder.Services.AddTransient<ReportRepository>();
 
 // admin services
 builder.Services.AddScoped<AdministradorService>();

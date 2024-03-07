@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using StudentHive.Domain.Dtos.QueryFilters;
+using StudentHive.Domain.Entities;
 
 namespace StudentHive.Infrastructure.Repositories;
 
@@ -10,7 +12,10 @@ public partial class RentalHouseRepository
         .Where(r => r.IdPublication == id)
         .CountAsync();
 
+        
+
         return totalRentalHouses;
 
     }
+
 }

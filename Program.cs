@@ -14,6 +14,7 @@ using StudentHive.Services.Features.RentalHouses;
 using StudentHive.Services.Features.Administradors;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
 using StudentHive.Services.Features.Requests;
+using StudentHive.Services.Features.Reports;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,10 @@ builder.Services.AddTransient<RentalHouseRepository>();
 // admin services
 builder.Services.AddScoped<AdministradorService>();
 builder.Services.AddTransient<AdministradorRepository>();
+
+//reportPublication services
+builder.Services.AddScoped<PublicationService>();
+builder.Services.AddTransient<PublicationReportRepository>();
 
 builder.Services.AddScoped<PasswordHasher>(); 
 

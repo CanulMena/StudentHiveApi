@@ -85,14 +85,14 @@ public class RentalHouseController : ControllerBase
         //Subir todas las imagenes
         for (int i = 0; i < rentalHouseCreateDto.ImagesFiles.Count; i++)
         {
-        var image = rentalHouseCreateDto.ImagesFiles[i];
-            Console.WriteLine(image);
-        if (image?.Length > 0)
-        {
-            var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
-            entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+            var image = rentalHouseCreateDto.ImagesFiles[i];
+                Console.WriteLine(image);
+            if (image?.Length > 0)
+            {
+                var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
+                entity.Images.Add(new Image { UrlImageHouse = imageUrl });
+            }
         }
-}
 
         await _rentalHouseService.Add(entity);
 
@@ -112,6 +112,27 @@ public class RentalHouseController : ControllerBase
         }
 
         _mapper.Map(rentalHouseUpdateDTO, entity);
+        
+
+        if(rentalHouseUpdateDTO.Title != null)
+        {
+            entity.Title = rentalHouseUpdateDTO.Title;
+        }
+
+        if(rentalHouseUpdateDTO.Description != null)
+        {
+            entity.Description = rentalHouseUpdateDTO.Description;
+        }
+
+        if(rentalHouseUpdateDTO.RentPrice != 0)
+        {
+            entity.RentPrice = rentalHouseUpdateDTO.RentPrice;
+        }
+
+        if(rentalHouseUpdateDTO.WhoElse != null)
+        {
+            entity.WhoElse = rentalHouseUpdateDTO.WhoElse;
+        }
 
         if (rentalHouseUpdateDTO.ImagesFiles != null)
         
@@ -134,37 +155,69 @@ public class RentalHouseController : ControllerBase
             }
         }
 
+        if(rentalHouseUpdateDTO.Service != null)
+        {
+            entity.IdHouseServiceNavigation!.AirConditioning = rentalHouseUpdateDTO.Service.AirConditioning;
+            entity.IdHouseServiceNavigation!.Gas = rentalHouseUpdateDTO.Service.Gas;
+            entity.IdHouseServiceNavigation!.Kitchen = rentalHouseUpdateDTO.Service.Kitchen;
+            entity.IdHouseServiceNavigation!.Television = rentalHouseUpdateDTO.Service.Television;
+            entity.IdHouseServiceNavigation!.Washer = rentalHouseUpdateDTO.Service.Washer;
+            entity.IdHouseServiceNavigation!.Water = rentalHouseUpdateDTO.Service.Water;
+            entity.IdHouseServiceNavigation!.Wifi = rentalHouseUpdateDTO.Service.Wifi;
+        }
+
+        if(rentalHouseUpdateDTO.HouseLocation != null)
+        {
+            entity.IdLocationNavigation!.Address = rentalHouseUpdateDTO.HouseLocation.Address;
+            entity.IdLocationNavigation!.City = rentalHouseUpdateDTO.HouseLocation.City;
+            entity.IdLocationNavigation!.Country = rentalHouseUpdateDTO.HouseLocation.Country;
+            entity.IdLocationNavigation!.State = rentalHouseUpdateDTO.HouseLocation.State;
+            entity.IdLocationNavigation!.PostalCode = rentalHouseUpdateDTO.HouseLocation.PostalCode;
+            entity.IdLocationNavigation!.Neighborhood = rentalHouseUpdateDTO.HouseLocation.Neighborhood;
+
+        }
+
+        if(rentalHouseUpdateDTO.DetailRentalHouse !=null )
+        {
+            entity.IdRentalHouseDetailNavigation!.NumberOfGuests = rentalHouseUpdateDTO.DetailRentalHouse.NumberOfGuests;
+            entity.IdRentalHouseDetailNavigation!.NumberOfBathrooms = rentalHouseUpdateDTO.DetailRentalHouse.NumberOfBathrooms;
+            entity.IdRentalHouseDetailNavigation!.NumberOfRooms = rentalHouseUpdateDTO.DetailRentalHouse.NumberOfRooms;
+            entity.IdRentalHouseDetailNavigation!.NumberOfHammocks = rentalHouseUpdateDTO.DetailRentalHouse.NumberOfHammocks;
+        }
+
+
         await _rentalHouseService.Update(entity);
 
         return NoContent();
     }
 
-[HttpDelete("{id}")]
-public async Task<IActionResult> Delete(int id)
-{
-    var entity = await _rentalHouseService.GetById(id);
-    if (entity == null)
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
     {
-        return NotFound();
-    }
-
-    // Eliminar imágenes
-    foreach (var image in entity.Images)
-    {
-        try
+        var entity = await _rentalHouseService.GetById(id);
+        if (entity == null)
         {
-            await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+            return NotFound();
         }
-        catch (Exception ex)
+    
+        // Eliminar imágenes
+        foreach (var image in entity.Images)
         {
-            // Registrar el mensaje de error y continuar con la siguiente imagen
-            _logger.LogError(ex, $"Error al eliminar la imagen con URL {image.UrlImageHouse}");
+            try
+            {
+                await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+            }
+            catch (Exception ex)
+            {
+                // Registrar el mensaje de error y continuar con la siguiente imagen
+                _logger.LogError(ex, $"Error al eliminar la imagen con URL {image.UrlImageHouse}");
+            }
         }
+    
+        await _rentalHouseService.Delete(id);
+    
+        return NoContent();
     }
-
-    await _rentalHouseService.Delete(id);
-
-    return NoContent();
-}
-
-}
+    
+    }

@@ -174,7 +174,6 @@ public class RentalHouseController : ControllerBase
             entity.IdLocationNavigation!.State = rentalHouseUpdateDTO.HouseLocation.State;
             entity.IdLocationNavigation!.PostalCode = rentalHouseUpdateDTO.HouseLocation.PostalCode;
             entity.IdLocationNavigation!.Neighborhood = rentalHouseUpdateDTO.HouseLocation.Neighborhood;
-
         }
 
         if(rentalHouseUpdateDTO.DetailRentalHouse !=null )

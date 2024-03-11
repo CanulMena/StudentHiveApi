@@ -9,8 +9,8 @@ public class RequestCreateMappingProfile : Profile
 {
     public RequestCreateMappingProfile()
     {               
-        CreateMap<UserCreateDTO, User>()
-        .ForMember(dest => dest.IdRol, opt => opt.MapFrom(src => 1));
+        CreateMap<UserCreateDTO, User>();
+        // .ForMember(dest => dest.IdRol, opt => opt.MapFrom(src => 1));
         
         CreateMap<RentalHouseCreateDto, RentalHouse>()
         .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.HouseLocation));

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StudentHive")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+019fb0b546e2da37f5aa4015bebae6a83c5ec203")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfaf697e8b631449bbe71fac3f051cf2c8e3664c")]
 [assembly: System.Reflection.AssemblyProductAttribute("StudentHive")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StudentHive")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

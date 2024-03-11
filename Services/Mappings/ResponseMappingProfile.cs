@@ -19,6 +19,7 @@ public class ResponseMappingProfile : Profile
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()
         .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.HouseLocation, opt => opt.MapFrom(src => src.IdLocationNavigation))
         .ForMember(dest => dest.NameofUser, opt => opt.MapFrom(src => src.IdUserNavigation!.Name));
 
         //RentalHouse 

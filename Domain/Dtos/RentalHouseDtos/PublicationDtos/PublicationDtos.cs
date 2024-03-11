@@ -8,4 +8,5 @@ public class PublicationDtos
     public List<string> Images { get; set; } = null!;
     public long RentPrice { get; set; }
     public DateTime PublicationDate { get; set; }
+    public virtual HouseLocationDto HouseLocation { get; set; } = null!;
 }

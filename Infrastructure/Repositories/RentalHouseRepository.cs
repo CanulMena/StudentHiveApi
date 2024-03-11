@@ -20,6 +20,7 @@ public async Task<IEnumerable<RentalHouse>> GetAllFilter(QueryRentalHouse queryR
 {
     var query = _context.RentalHouses
     .Include(r => r.IdHouseServiceNavigation)
+    .Include(r => r.IdLocationNavigation)
     .Include(r => r.Images)
     .Include(r => r.IdLocationNavigation)
     .Include(r => r.IdRentalHouseDetailNavigation)

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
@@ -17,11 +18,14 @@ public class RentalHouseController : ControllerBase
     private readonly IMapper _mapper;
     private readonly CloudinaryRentalHouse _coudinaryRentalHouse;
 
-    public RentalHouseController(RentalHouseService rentalHouseService, IMapper mapper,CloudinaryRentalHouse coudinaryRentalHouse)
+    private readonly ILogger<RentalHouseController> _logger;
+
+    public RentalHouseController(RentalHouseService rentalHouseService, IMapper mapper,CloudinaryRentalHouse coudinaryRentalHouse, ILogger<RentalHouseController> logger)
     {
         this._rentalHouseService = rentalHouseService;
         this._coudinaryRentalHouse = coudinaryRentalHouse;
         this._mapper = mapper;
+        this._logger = logger;
     }
 
     [HttpGet("Publications")]
@@ -99,7 +103,7 @@ public class RentalHouseController : ControllerBase
 
 
     [HttpPut]
-    public async Task<IActionResult> Update(int id, RentalHouseUpdateDto rentalHouseUpdateDTO)
+    public async Task<IActionResult> Update(int id, [FromQuery] RentalHouseUpdateDto rentalHouseUpdateDTO)
     {
         var entity = await _rentalHouseService.GetById(id);
         if (entity == null)
@@ -109,8 +113,8 @@ public class RentalHouseController : ControllerBase
 
         _mapper.Map(rentalHouseUpdateDTO, entity);
 
-        // Delete existing images
         if (rentalHouseUpdateDTO.ImagesFiles != null)
+        
         {
             foreach (var image in entity.Images)
             {
@@ -144,10 +148,18 @@ public async Task<IActionResult> Delete(int id)
         return NotFound();
     }
 
-    // Delete images
+    // Eliminar imágenes
     foreach (var image in entity.Images)
     {
-        await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+        try
+        {
+            await _coudinaryRentalHouse.DeleteImageAsync(image.UrlImageHouse);
+        }
+        catch (Exception ex)
+        {
+            // Registrar el mensaje de error y continuar con la siguiente imagen
+            _logger.LogError(ex, $"Error al eliminar la imagen con URL {image.UrlImageHouse}");
+        }
     }
 
     await _rentalHouseService.Delete(id);

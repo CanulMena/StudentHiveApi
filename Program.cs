@@ -57,6 +57,7 @@ builder.Services.AddScoped<PasswordHasher>();
 
 
 builder.Services.AddControllers(); //*<--- Controller services added 
+builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>
 {

@@ -4,15 +4,9 @@ public class RentalHouseCreateDto
 { 
         public int IdUser { get; set; }
         public string Title { get; set; } = null!;
-
         public string Description { get; set; } = null!;
-
-        public bool Status { get; set; }
-
         public string WhoElse { get; set; } = null!;
-
         public long RentPrice { get; set; }
-
         public string TypeHouse { get; set; } = null!;
         public RentalHouseDetailCreateDto DetailRentalHouse { get; set; } = null!;
         public HouseServiceCreateDto HouseService { get; set; } = null!;

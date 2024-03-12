@@ -6159,11 +6159,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj",
+      "projectUniqueName": "C:\\Users\\gusss\\desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj",
       "projectName": "StudentHive",
-      "projectPath": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj",
-      "packagesPath": "C:\\Users\\jesus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\obj\\",
+      "projectPath": "C:\\Users\\gusss\\desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj",
+      "packagesPath": "C:\\Users\\gusss\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gusss\\desktop\\last-v-api\\StudentHiveApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -83,7 +83,7 @@ public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> Get
         await _context.SaveChangesAsync();
     }
 
-    public async Task Update(RentalHouse rentalHouse)
+  public async Task Update(RentalHouse rentalHouse)
     {
         _context.RentalHouses.Update(rentalHouse);
         await _context.SaveChangesAsync();

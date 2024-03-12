@@ -101,5 +101,9 @@ public class UsersService
     await _UserRepository.Update(user);
 }
 
+    public async Task Delete(int id)
+{
+    await _UserRepository.Delete(id);
+}
 
 }

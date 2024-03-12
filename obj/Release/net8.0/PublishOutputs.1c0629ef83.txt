@@ -1,6 +1,11 @@
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\StudentHive.exe
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\publish\web.config
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\appsettings.Development.json
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\appsettings.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\publish\appsettings.Development.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\publish\appsettings.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\publish\StudentHive.deps.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\publish\StudentHive.runtimeconfig.json
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\StudentHive.dll
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\StudentHive.runtimeconfig.json
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\publish\StudentHive.pdb

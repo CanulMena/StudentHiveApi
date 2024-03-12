@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\StudentHive.csproj": {}
+    "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\StudentHive.csproj": {
+    "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\StudentHive.csproj",
+        "projectUniqueName": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj",
         "projectName": "StudentHive",
-        "projectPath": "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\StudentHive.csproj",
-        "packagesPath": "C:\\Users\\gusss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\obj\\",
+        "projectPath": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\StudentHive.csproj",
+        "packagesPath": "C:\\Users\\jesus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jesus\\Documents\\Cuatrimestre\\5\\StudentHive\\StudentHiveApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

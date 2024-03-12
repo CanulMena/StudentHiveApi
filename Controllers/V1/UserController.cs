@@ -153,5 +153,19 @@ namespace StudentHive.Controllers.V1
             return NoContent();
         }
 
+        [Authorize(Policy = "Administrador")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _usersService.GetById(id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            
+            await _usersService.Delete(id);
+            return NoContent();
+        }
+
     }
 }

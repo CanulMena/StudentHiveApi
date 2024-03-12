@@ -158,3 +158,8 @@ C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\obj\Release\n
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\obj\Release\net8.0\StudentHive.pdb
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\obj\Release\net8.0\StudentHive.genruntimeconfig.cache
 C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\obj\Release\net8.0\ref\StudentHive.dll
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\bin\Release\net8.0\publish\web.config
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\bin\Release\net8.0\publish\appsettings.Development.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\bin\Release\net8.0\publish\appsettings.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\bin\Release\net8.0\publish\StudentHive.deps.json
+C:\Users\jesus\Documents\Cuatrimestre\5\StudentHive\StudentHiveApi\bin\Release\net8.0\publish\StudentHive.runtimeconfig.json

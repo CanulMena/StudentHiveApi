@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5Hs8nqYhTY1XRToLdsUG30h191PJMGI4XSdIaGP66q6fZEEcfU2KXaNH9wPVGWhLLLEbNaY5kElmq7GJX2nBpQ==",
+  "dgSpecHash": "IUwhkYav6RikMfmECLajibI7r8TwNAWy86xsrH3AosrCncYdSXgTdgEUcfIsrFsBGkS4QLaHj9093mwXE+TgZA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gusss\\Desktop\\api\\StudentHiveApi\\StudentHive.csproj",
+  "projectFilePath": "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gusss\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\gusss\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

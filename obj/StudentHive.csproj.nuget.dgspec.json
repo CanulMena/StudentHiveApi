@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj": {}
+    "C:\\Users\\angel\\Documents\\StudentHiveApi\\StudentHiveApi\\StudentHive.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj": {
+    "C:\\Users\\angel\\Documents\\StudentHiveApi\\StudentHiveApi\\StudentHive.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj",
+        "projectUniqueName": "C:\\Users\\angel\\Documents\\StudentHiveApi\\StudentHiveApi\\StudentHive.csproj",
         "projectName": "StudentHive",
-        "projectPath": "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\StudentHive.csproj",
-        "packagesPath": "C:\\Users\\gusss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gusss\\Desktop\\last-v-api\\StudentHiveApi\\obj\\",
+        "projectPath": "C:\\Users\\angel\\Documents\\StudentHiveApi\\StudentHiveApi\\StudentHive.csproj",
+        "packagesPath": "C:\\Users\\angel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\angel\\Documents\\StudentHiveApi\\StudentHiveApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gusss\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\angel\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

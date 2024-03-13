@@ -74,7 +74,7 @@ namespace StudentHive.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Add( UserCreateDTO UserCreateDto ) 
+        public async Task<IActionResult> Add( [FromQuery]UserCreateDTO UserCreateDto ) 
         {                        // User <= UserCreateDto       // src <= dest    
             var Entity = _mapper.Map<User>(UserCreateDto); 
             Entity.Password = _usersService.HashPassword( Entity.Password );

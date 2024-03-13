@@ -19,19 +19,19 @@ public class PublicationReportController : ControllerBase
     }
 
     
-    [HttpGet]
-    public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
-    {
-        var result = await _publicationService.GetAprove(pageNumber, pageSize);
-        var response = new
-        {
-            page = pageNumber,
-            results = _mapper.Map<IEnumerable<PublicationToBeAprovedDto>>(result.Items),
-            total_pages = result.TotalPages,
-            total_results = result.TotalCount
-        };
-        return Ok(response);
-    }
+    // [HttpGet]
+    // public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 10)
+    // {
+    //     var result = await _publicationService.GetAprove(pageNumber, pageSize);
+    //     var response = new
+    //     {
+    //         page = pageNumber,
+    //         results = _mapper.Map<IEnumerable<PublicationToBeAprovedDto>>(result.Items),
+    //         total_pages = result.TotalPages,
+    //         total_results = result.TotalCount
+    //     };
+    //     return Ok(response);
+    // }
 
     [HttpGet("reported")]
     public async Task<IActionResult> GetReported(int pageNumber = 1, int pageSize = 10)

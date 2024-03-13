@@ -42,6 +42,24 @@ public class RentalHouseController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("true/Publications")]
+public async Task<IActionResult> GetAllTruePublications(int pageNumber = 1, int pageSize = 10)
+{
+    var result = await _rentalHouseService.GetAll(pageNumber, pageSize);
+    
+    // Filtrar los resultados para que solo incluyan publicaciones con Status = true
+    var filteredItems = result.Items.Where(item => item.Status == true);
+
+    var response = new
+    {
+        page = pageNumber,
+        results = _mapper.Map<IEnumerable<PublicationDtos>>(filteredItems),
+        total_pages = result.TotalPages,
+        total_results = result.TotalCount
+    };
+    return Ok(response);
+}
+
     [HttpGet("filter")]
     public async Task<IActionResult> GetAllFilter([FromQuery] QueryRentalHouse queryRentalHouse)
     {

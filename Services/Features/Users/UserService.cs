@@ -71,7 +71,7 @@ public class UsersService
 
         var securityToken = new JwtSecurityToken(
                                 claims: claims,
-                                expires: DateTime.Now.AddDays(1),
+                                expires: DateTime.Now.AddDays(256),
                                 signingCredentials: creds
                             );
 

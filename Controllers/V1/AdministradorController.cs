@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Dtos.AdminDtos;
 using StudentHive.Domain.Entities;
 using StudentHive.Services.Features.Administradors;
@@ -39,10 +40,21 @@ public class AdministradorController : ControllerBase
         return Ok(administradorToMasterDto);
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> AuthLogin(AuthLoginDTO authLoginDto)
+    {
+        var token = await _administradorService.AuthLogin(authLoginDto);
+        if (token == "")
+            return Unauthorized();
+
+        return Ok(token);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Add(CreateAdministradorDto administradorCreateDto)
     {
         var entity = _mapper.Map<Administrador>(administradorCreateDto);
+        entity.Password = _administradorService.HashPassword(entity.Password);
 
         await
             _administradorService.Add(entity);
@@ -52,20 +64,30 @@ public class AdministradorController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = entity.IdAdmin }, administradorDto);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Update(int id, CreateAdministradorDto administradorUpdateDto)
+    // [HttpPut]
+    // public async Task<IActionResult> Update(int id, CreateAdministradorDto administradorUpdateDto)
+    // {
+    //     try
+    //     {
+    //         var entity = _mapper.Map<Administrador>(administradorUpdateDto);
+    //         entity.IdAdmin = id;
+    //         await _administradorService.Update(entity);
+    //         return NoContent();
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return NotFound(e.Message);
+    //     }
+    // }
+
+    [HttpPatch]
+    public async Task<IActionResult> UpdateEmail(int id, string email)
     {
-        try
-        {
-            var entity = _mapper.Map<Administrador>(administradorUpdateDto);
-            entity.IdAdmin = id;
-            await _administradorService.Update(entity);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return NotFound(e.Message);
-        }
+        var entity = await _administradorService.GetById(id);
+        entity.Email = email;
+        await _administradorService.Update(entity);
+        return NoContent();
+    
     }
 
     [HttpDelete("{id}")]

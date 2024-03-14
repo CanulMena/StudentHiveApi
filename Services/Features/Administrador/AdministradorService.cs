@@ -46,7 +46,7 @@ public class AdministradorService
             return "";
 
             var administrador = await _AdministradorRepository.GetByEmail(authLoginDTO.Email);
-            if(administrador.IdAdmin <= 0 || administrador.Password == null)
+            if(administrador.Email == null || administrador.Password == null)
                 return "";
 
             var result = _passwordHasher.Verify(administrador.Password, authLoginDTO.Password);
@@ -74,7 +74,7 @@ public class AdministradorService
 
         var securityToken = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddDays(365),
+            expires: DateTime.Now.AddDays(1),
             signingCredentials: creds
         );
         var token = new JwtSecurityTokenHandler().WriteToken(securityToken);

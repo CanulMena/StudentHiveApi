@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Dtos.AdminDtos;
@@ -16,10 +17,11 @@ public class AdministradorController : ControllerBase
 
     public AdministradorController(AdministradorService administradorService, IMapper mapper)
     {
-        _administradorService = administradorService;
-        _mapper = mapper;
+        this._administradorService = administradorService;
+        this._mapper = mapper;
     }
 
+    [Authorize(Policy = "Administrador")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -28,7 +30,8 @@ public class AdministradorController : ControllerBase
         return Ok(administradorDtos);
     }
 
-    [HttpGet("{id}")]
+    [Authorize(Policy = "Administrador")]
+    [HttpGet("id/{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         var administrador = await _administradorService.GetById(id);
@@ -40,16 +43,19 @@ public class AdministradorController : ControllerBase
         return Ok(administradorToMasterDto);
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<IActionResult> AuthLogin(AuthLoginDTO authLoginDto)
-    {
-        var token = await _administradorService.AuthLogin(authLoginDto);
-        if (token == "")
-            return Unauthorized();
-
-        return Ok(token);
+    public async Task<IActionResult> AuthLogin(AuthLoginDTO authLogin)
+    {   //me esta regresando la instancia del usuario que existe en la base de datos con el campo de rol
+        var userToken = await _administradorService.AuthLogin(authLogin);
+        //* si me regresa una sentencia user() vacia tendrá id = 0
+        if (userToken == "")
+            return BadRequest("Invalid email or password");
+        
+        return Ok(userToken);
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Add(CreateAdministradorDto administradorCreateDto)
     {
@@ -80,10 +86,15 @@ public class AdministradorController : ControllerBase
     //     }
     // }
 
-    [HttpPatch]
+
+    [HttpPatch("{id}/email")]
     public async Task<IActionResult> UpdateEmail(int id, string email)
     {
         var entity = await _administradorService.GetById(id);
+        if (entity == null)
+        {
+            return NotFound();
+        }
         entity.Email = email;
         await _administradorService.Update(entity);
         return NoContent();

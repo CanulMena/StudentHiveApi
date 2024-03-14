@@ -27,7 +27,9 @@ public class AdministradorRepository
 
     public async Task<Administrador> GetByEmail(string email)
     {
-        var Administrador = await _context.Administrador.FirstOrDefaultAsync(Administrador => Administrador.Email == email);
+        var Administrador = await _context.Administrador
+        .Include(u => u.IdRolNavigation)
+        .FirstOrDefaultAsync(Administrador => Administrador.Email == email);
         return Administrador ?? new Administrador();
     }
 

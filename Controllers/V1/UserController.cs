@@ -5,8 +5,8 @@ using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Entities;
 using StudentHive.Services.Features.Users;
 
-namespace StudentHive.Controllers.V1
-{
+namespace StudentHive.Controllers.V1;
+
     //* These are the entry and exit point
     //*Here i begin to work with my DTO and mappers. 
 // to do commit
@@ -168,4 +168,3 @@ namespace StudentHive.Controllers.V1
         }
 
     }
-}

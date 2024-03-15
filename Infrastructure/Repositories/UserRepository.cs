@@ -75,6 +75,12 @@ public class UserRepository
             await _context.SaveChangesAsync();    
         }
     }
+
+    public Task<IEnumerable<User>> GetUsersInWaitList(int requestId)
+{
+    // Devolver un Task.FromResult para cumplir con la firma del método
+    return Task.FromResult<IEnumerable<User>>(new List<User>());
+}
 }
 
 

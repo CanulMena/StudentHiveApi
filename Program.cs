@@ -33,6 +33,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Notification services
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
 // Request services
 builder.Services.AddScoped<RequestService>();
 builder.Services.AddTransient<RequestRepository>();
@@ -108,9 +111,6 @@ Cloudinary cloudinary = new Cloudinary(account);
 builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped<ImageUploadService>();
 builder.Services.AddScoped<CloudinaryRentalHouse>();
-
-
-
 
 builder.Services.AddAutoMapper(typeof(ResponseMappingProfile).Assembly);
 builder.Services.AddAutoMapper(typeof(RequestCreateMappingProfile).Assembly);

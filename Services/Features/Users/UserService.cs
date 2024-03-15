@@ -106,4 +106,11 @@ public class UsersService
     await _UserRepository.Delete(id);
 }
 
+public async Task<IEnumerable<User>> GetUsersInWaitList(int requestId)
+{
+    // Suponiendo que _UserRepository tiene un método GetUsersInWaitList que es asincrónico
+    var users = await _UserRepository.GetUsersInWaitList(requestId);
+    return users;
+}
+
 }

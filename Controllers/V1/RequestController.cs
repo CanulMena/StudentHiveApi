@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Entities;
 using StudentHive.Services.Features.Requests;
+using StudentHive.Services.Features.Users;
 
 namespace StudentHive.Controllers.V1;
 
@@ -11,14 +12,17 @@ namespace StudentHive.Controllers.V1;
 public class RequestController : ControllerBase
 {
     private readonly RequestService _requestService;
+    private readonly UsersService _userService;
+    private readonly INotificationService _notificationService;
     private readonly IMapper _mapper;
 
-    public RequestController(RequestService requestService, IMapper mapper)
+    public RequestController(RequestService requestService, IMapper mapper, INotificationService notificationService, UsersService userService)
     {
         this._requestService = requestService;
         this._mapper = mapper;
+        this._notificationService = notificationService;
+        this._userService = userService;
     }
-
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -59,6 +63,45 @@ public class RequestController : ControllerBase
     //     await _requestService.Update(request);
     //     return Ok();
     // }
+
+[HttpPatch]
+public async Task<IActionResult> Status(int id, StatusRequestDto statusRequestDto)
+{
+    var request = await _requestService.GetById(id);
+    if (request.IdRequest <= 0)
+    {
+        return NotFound();
+    }
+
+    request.Status = statusRequestDto.Status;
+    await _requestService.Update(request);
+
+    // Si el estado es "Aceptada", enviar una notificación al usuario que hizo la solicitud
+    if (statusRequestDto.Status == "Aceptada")
+{
+    if (request.IdUser.HasValue)
+    {
+        await _notificationService.SendNotification(request.IdUser.Value, "Tu solicitud ha sido aceptada.");
+    }
+    else
+    {
+        // Manejar el caso en que request.IdUser es null
+    }
+}
+
+    // Si el estado es "Aceptada", enviar una notificación de "Rechazada" a los usuarios en espera
+    if (statusRequestDto.Status == "Aceptada")
+    {
+        var waitingUsers = await _userService.GetUsersInWaitList(request.IdRequest);
+        foreach (var user in waitingUsers)
+        {
+            await _notificationService.SendNotification(user.IdUser, "Lo sentimos, por el momento el espacio ya ha sido ocupado.");
+        }
+    }
+
+    return Ok();
+}
+    
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

@@ -8,8 +8,8 @@ namespace StudentHive.Infrastructure.Repositories;
 //*It is le logic of database services ----- this is my datasource
 public class UserRepository
 {
-    private readonly StudentHiveDbContext _context; //*Here i am interactuanding with my database
-    public UserRepository(StudentHiveDbContext context)
+    private readonly StudentHiveApiDbContext _context; //*Here i am interactuanding with my database
+    public UserRepository(StudentHiveApiDbContext context)
     {
         this._context = context;
     }

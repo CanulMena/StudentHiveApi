@@ -5,9 +5,9 @@ namespace StudentHive.Infrastructure.Repositories;
 
 public class RequestRepository
 {
-    private readonly StudentHiveDbContext _context;
+    private readonly StudentHiveApiDbContext _context;
 
-    public RequestRepository(StudentHiveDbContext context)
+    public RequestRepository(StudentHiveApiDbContext context)
     {
         _context = context;
     }

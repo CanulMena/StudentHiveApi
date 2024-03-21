@@ -19,5 +19,5 @@ public partial class Location
 
     public string? Neighborhood { get; set; }
 
-    public virtual RentalHouse? RentalHouses { get; set; }
+    public virtual RentalHouse? RentalHouse { get; set; }
 }

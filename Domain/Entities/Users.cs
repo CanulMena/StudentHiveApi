@@ -25,21 +25,17 @@ public partial class User
 
     public byte? Genderu { get; set; }
 
-    public int? IdTypeReport { get; set; }
-
     public int? IdRol { get; set; }
+
+    public virtual ICollection<EventSubscription> EventSubscriptions { get; set; } = new List<EventSubscription>();
 
     public virtual Rol? IdRolNavigation { get; set; }
 
-    public virtual ReportType? IdTypeReportNavigation { get; set; }
+    public virtual ICollection<Notification> Notification { get; set; } = new List<Notification>();
 
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+    public virtual ICollection<RentalHouse> RentalHouse { get; set; } = new List<RentalHouse>();
 
-    public virtual ICollection<RentalHouse> RentalHouses { get; set; } = new List<RentalHouse>();
+    public virtual ICollection<Report> Report { get; set; } = new List<Report>();
 
-    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
-
-    public virtual ICollection<Report> IdReport { get; set; } = new List<Report>();
-
+    public virtual ICollection<Request> Request { get; set; } = new List<Request>();
 }
-

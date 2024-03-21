@@ -8,8 +8,8 @@ public class RolConfiguration : IEntityTypeConfiguration<Rol>
 {
     public void Configure(EntityTypeBuilder<Rol> builder)
     {
-        builder.ToTable("Rols");
-        builder.HasKey(e => e.IdRol).HasName("PK__Rols__202AD220FD3012F7");
+        builder.ToTable("Rol");
+            builder.HasKey(e => e.IdRol).HasName("PK__Rol__202AD2200053F1B2");
 
             builder.Property(e => e.IdRol).HasColumnName("ID_Rol");
             builder.Property(e => e.NombreRol)

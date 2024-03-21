@@ -9,22 +9,24 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
         builder.ToTable("Notifications");
-        builder.HasKey(e => e.IdNotification).HasName("PK__Notifica__09D4F166A8339476");
+            builder.HasKey(e => e.IdNotification).HasName("PK__Notifica__09D4F166831B055D");
 
             builder.Property(e => e.IdNotification).HasColumnName("ID_Notification");
             builder.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            builder.Property(e => e.IdRequest).HasColumnName("ID_Request");
+            builder.Property(e => e.IdEvent).HasColumnName("ID_Event");
             builder.Property(e => e.IdUser).HasColumnName("ID_User");
             builder.Property(e => e.Message).IsUnicode(false);
 
-            builder.HasOne(d => d.IdRequestNavigation).WithMany(p => p.Notifications)
-                .HasForeignKey(d => d.IdRequest)
-                .HasConstraintName("FK__Notificat__ID_Re__02FC7413");
+            builder.HasOne(d => d.IdEventNavigation).WithMany(p => p.Notification)
+                .HasForeignKey(d => d.IdEvent)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Notificat__ID_Ev__6A30C649");
 
-            builder.HasOne(d => d.IdUserNavigation).WithMany(p => p.Notifications)
+            builder.HasOne(d => d.IdUserNavigation).WithMany(p => p.Notification)
                 .HasForeignKey(d => d.IdUser)
-                .HasConstraintName("FK__Notificat__ID_Us__02084FDA");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Notificat__ID_Us__6B24EA82");
     }
 }

@@ -9,7 +9,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
     public void Configure(EntityTypeBuilder<Location> builder)
     {
         builder.ToTable("Locations");
-        builder.HasKey(e => e.IdLocation).HasName("PK__Location__2F2C70A74FF4CEBB");
+            builder.HasKey(e => e.IdLocation).HasName("PK__Location__2F2C70A78E7A59B5");
 
             builder.Property(e => e.IdLocation).HasColumnName("ID_Location");
             builder.Property(e => e.Address)

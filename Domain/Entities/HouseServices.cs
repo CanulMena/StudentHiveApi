@@ -21,5 +21,5 @@ public partial class HouseService
 
     public bool? Television { get; set; }
 
-    public virtual RentalHouse? RentalHouses { get; set; }
+    public virtual RentalHouse? RentalHouse { get; set; }
 }

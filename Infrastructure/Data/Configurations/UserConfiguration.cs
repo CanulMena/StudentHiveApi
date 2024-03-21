@@ -9,7 +9,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
-        builder.HasKey(e => e.IdUser).HasName("PK__Users__ED4DE44298421041");
+            builder.HasKey(e => e.IdUser).HasName("PK__Users__ED4DE4422E11A226");
 
             builder.Property(e => e.IdUser).HasColumnName("ID_User");
             builder.Property(e => e.Description).IsUnicode(false);
@@ -17,21 +17,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasMaxLength(50)
                 .IsUnicode(false);
             builder.Property(e => e.IdRol).HasColumnName("ID_Rol");
-            builder.Property(e => e.IdTypeReport).HasColumnName("ID_TypeReport");
             builder.Property(e => e.LastName).IsUnicode(false);
             builder.Property(e => e.Name).IsUnicode(false);
-            builder.Property(e => e.Password)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+            builder.Property(e => e.Password).IsUnicode(false);
             builder.Property(e => e.ProfilePhotoUrl).IsUnicode(false);
             builder.Property(e => e.UserAge).HasColumnName("User_Age");
 
-            builder.HasOne(d => d.IdRolNavigation).WithMany(p => p.Users)
+            builder.HasOne(d => d.IdRolNavigation).WithMany(p => p.User)
                 .HasForeignKey(d => d.IdRol)
-                .HasConstraintName("FK__Users__ID_Rol__5165187F");
-
-            builder.HasOne(d => d.IdTypeReportNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.IdTypeReport)
-                .HasConstraintName("FK__Users__ID_TypeRe__5070F446");
+                .HasConstraintName("FK__Users__ID_Rol__3C69FB99");
     }
 }

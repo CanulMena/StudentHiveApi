@@ -18,7 +18,7 @@ public class ResponseMappingProfile : Profile
 
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.HouseLocation, opt => opt.MapFrom(src => src.IdLocationNavigation))
         .ForMember(dest => dest.NameofUser, opt => opt.MapFrom(src => src.IdUserNavigation!.Name));
 
@@ -28,7 +28,7 @@ public class ResponseMappingProfile : Profile
         .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.IdLocationNavigation))
         .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
         .ForMember(dest => dest.IdRentalHouseDetailNavigation, opt => opt.MapFrom(src => src.IdRentalHouseDetailNavigation))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()));
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()));
 
         CreateMap<HouseService, HouseServiceDto>();
         CreateMap<Location, HouseLocationDto>();
@@ -39,8 +39,8 @@ public class ResponseMappingProfile : Profile
 
         
         //Administrador
-        CreateMap<Administrador, MasterDto>()
-        .ForMember(dest => dest.NombreRol, opt => opt.MapFrom(src => src.IdRolNavigation!.NombreRol));
+        // CreateMap<Administrador, MasterDto>()
+        // .ForMember(dest => dest.NombreRol, opt => opt.MapFrom(src => src.IdRolNavigation!.NombreRol));
     
         //Request
         CreateMap<Request, RequestDto>()
@@ -52,15 +52,15 @@ public class ResponseMappingProfile : Profile
         CreateMap<RentalHouse, RepotedPublicationDtos>()
         .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication))
         .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.WebUser, opt => opt.MapFrom( src => src.IdUserNavigation))
-        .ForMember(dest => dest.IdReport, opt => opt.MapFrom( src => src.IdReport.Select(x => x.IdReport).ToList()))
-        .ForMember(dest => dest.TypeReport, opt => opt.MapFrom( src => src.IdTypeReportNavigation));
+        .ForMember(dest => dest.IdReport, opt => opt.MapFrom( src => src.IdReport.Select(x => x.IdReport).ToList()));
+        // .ForMember(dest => dest.TypeReport, opt => opt.MapFrom( src => src.IdTypeReportNavigation));
 
         CreateMap<RentalHouse, PublicationToBeAprovedDto>()
         .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication))
         .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.dateTime, opt => opt.MapFrom(src => src.PublicationDate))
         .ForMember(dest => dest.WebLocationDtos, opt => opt.MapFrom(src => src.IdLocationNavigation))
         .ForMember(dest => dest.WebUser, opt => opt.MapFrom(src => src.IdUserNavigation))

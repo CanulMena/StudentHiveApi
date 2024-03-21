@@ -23,7 +23,5 @@ public partial class Request
 
     public virtual User? IdUserNavigation { get; set; }
 
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
-
-    public virtual ICollection<ReservationConfirmed> ReservationsConfirmed { get; set; } = new List<ReservationConfirmed>();
+    public virtual ICollection<ReservationConfirmed> ReservationConfirmed { get; set; } = new List<ReservationConfirmed>();
 }

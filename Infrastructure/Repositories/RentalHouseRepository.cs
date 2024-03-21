@@ -7,9 +7,9 @@ namespace StudentHive.Infrastructure.Repositories;
 
 public partial class RentalHouseRepository
 {
-    private readonly StudentHiveDbContext _context;
+    private readonly StudentHiveApiDbContext _context;
 
-    public RentalHouseRepository(StudentHiveDbContext context)
+    public RentalHouseRepository(StudentHiveApiDbContext context)
     {
         this._context = context;
     }
@@ -21,7 +21,7 @@ public async Task<IEnumerable<RentalHouse>> GetAllFilter(QueryRentalHouse queryR
     var query = _context.RentalHouses
     .Include(r => r.IdHouseServiceNavigation)
     .Include(r => r.IdLocationNavigation)
-    .Include(r => r.Images)
+    .Include(r => r.Image)
     .Include(r => r.IdLocationNavigation)
     .Include(r => r.IdRentalHouseDetailNavigation)
     .AsQueryable()
@@ -36,7 +36,7 @@ public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> Get
     var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
     var items = await _context.RentalHouses
         .Include(r => r.IdHouseServiceNavigation)
-        .Include(r => r.Images)
+        .Include(r => r.Image)
         .Include(r => r.IdLocationNavigation)
         .Include(r => r.IdUserNavigation)
         .Skip((pageNumber - 1) * pageSize)
@@ -51,7 +51,7 @@ public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> Get
     {
         var rentalHouse = await _context.RentalHouses
         .Include(r => r.IdHouseServiceNavigation)
-        .Include(r => r.Images)
+        .Include(r => r.Image)
         // .Include(r => r.Requests)
         .Include(r => r.IdLocationNavigation)
         .Include(r => r.IdRentalHouseDetailNavigation)
@@ -66,11 +66,10 @@ public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> Get
     {
         var rentalHouse = await _context.RentalHouses
         .Include(r => r.IdHouseServiceNavigation)
-        .Include(r => r.Images)
-        .Include(r => r.Requests)
+        .Include(r => r.Image)
+        .Include(r => r.Request)
         .Include(r => r.IdLocationNavigation)
         .Include(r => r.IdRentalHouseDetailNavigation)
-        .Include(r => r.IdTypeReportNavigation)
         .Include(r => r.IdUserNavigation)
 
         .FirstOrDefaultAsync(rentalHouse => rentalHouse.IdUser == id);
@@ -92,14 +91,13 @@ public async Task<(List<RentalHouse> Items, int TotalCount, int TotalPages)> Get
 public async Task Delete(int id)
 {
     var rentalHouse = await _context.RentalHouses
-    .Include(r => r.Images)
+    .Include(r => r.Image)
     .Include(r => r.IdLocationNavigation)
     .Include(r => r.IdRentalHouseDetailNavigation)
-    .Include(r => r.IdTypeReportNavigation)
     .FirstOrDefaultAsync(r => r.IdPublication == id);
     if (rentalHouse != null)
     {
-        _context.Images.RemoveRange(rentalHouse.Images);
+        _context.Images.RemoveRange(rentalHouse.Image);
         _context.RentalHouses.Remove(rentalHouse);
         await _context.SaveChangesAsync();
     }

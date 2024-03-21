@@ -43,15 +43,15 @@ public class RequestCreateMappingProfile : Profile
         .ForMember(dest => dest.IdRentalHouseDetailNavigation, opt => opt.MapFrom(src => src.DetailRentalHouse));
         //UserCreateDTO => User
         
-        //Administrador
-        CreateMap<Administrador, MasterDto>();
-        CreateMap<CreateAdministradorDto, Administrador>()
-        .AfterMap(
-            (src, dest ) =>
-            {
-                dest.IdRol = 2;
-            }
-        );
+        // //Administrador
+        // CreateMap<Administrador, MasterDto>();
+        // CreateMap<CreateAdministradorDto, Administrador>()
+        // .AfterMap(
+        //     (src, dest ) =>
+        //     {
+        //         dest.IdRol = 2;
+        //     }
+        // );
 
         //Request
         CreateMap<CreateRequestDto, Request>()

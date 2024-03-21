@@ -11,7 +11,6 @@ using CloudinaryDotNet;
 using System.Security.Claims;
 using System.Text;
 using StudentHive.Services.Features.RentalHouses;
-using StudentHive.Services.Features.Administradors;
 using StudentHive.Services.Features.CoudinaryRentalHouses;
 using StudentHive.Services.Features.Requests;
 using StudentHive.Services.Features.Reports;
@@ -49,8 +48,8 @@ builder.Services.AddScoped<RentalHouseService>();
 builder.Services.AddTransient<RentalHouseRepository>();
 
 // admin services
-builder.Services.AddScoped<AdministradorService>();
-builder.Services.AddTransient<AdministradorRepository>();
+// builder.Services.AddScoped<AdministradorService>();
+// builder.Services.AddTransient<AdministradorRepository>();
 
 //reportPublication services
 builder.Services.AddScoped<PublicationService>();
@@ -94,7 +93,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Administrador", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador"));
 });
 
-builder.Services.AddDbContext<StudentHiveDbContext>(
+builder.Services.AddDbContext<StudentHiveApiDbContext>(
     options => {
         options.UseSqlServer(Configuration.GetConnectionString("gemDevelopment"));
     }

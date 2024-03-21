@@ -9,7 +9,7 @@ public class HouseServiceConfiguration : IEntityTypeConfiguration<HouseService>
     public void Configure(EntityTypeBuilder<HouseService> builder)
     {
         builder.ToTable("HouseServices");
-        builder.HasKey(e => e.IdHouseService).HasName("PK__HouseSer__BBD08A238E40FE6A");
+            builder.HasKey(e => e.IdHouseService).HasName("PK__HouseSer__BBD08A23BAFA7918");
 
             builder.Property(e => e.IdHouseService).HasColumnName("ID_HouseService");
     }

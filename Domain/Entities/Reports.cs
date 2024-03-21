@@ -11,9 +11,15 @@ public partial class Report
 
     public DateTime CreatedAt { get; set; }
 
+    public int? IdPublication { get; set; }
+
+    public int? IdUser { get; set; }
+
+    public virtual RentalHouse? IdPublication1 { get; set; }
+
     public virtual ReportType IdReportTypeNavigation { get; set; } = null!;
 
-    public virtual ICollection<RentalHouse> IdPublication { get; set; } = new List<RentalHouse>();
+    public virtual User? IdUserNavigation { get; set; }
 
-    public virtual ICollection<User> IdUser { get; set; } = new List<User>();
+    public virtual ICollection<RentalHouse> IdPublicationNavigation { get; set; } = new List<RentalHouse>();
 }

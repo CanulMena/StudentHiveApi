@@ -5,45 +5,83 @@ namespace StudentHive.Infrastructure.Repositories;
 
 public class ReportRepository
 {
-    private readonly StudentHiveDbContext _context;
+    private readonly StudentHiveApiDbContext _context;
 
-    public ReportRepository(StudentHiveDbContext context)
+    public ReportRepository(StudentHiveApiDbContext context)
     {
-        this._context = context;
+        _context = context;
     }
-
+    
     public async Task<IEnumerable<Report>> GetAll()
     {
-        var reports = await _context.Reports
-            .Include(r => r.IdUser)
+        return await _context.Reports
             .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
             .ToListAsync();
-        return reports;
     }
 
     public async Task<Report> GetById(int id)
     {
         var report = await _context.Reports
-            .Include(r => r.IdUser)
             .Include(r => r.IdReportTypeNavigation)
-            .FirstOrDefaultAsync(report => report.IdReport == id);
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .FirstOrDefaultAsync(r => r.IdReport == id);
+        return report ?? new Report();
+    }
+    
+    public async Task<Report> GetByPublicationId(int id)
+    {
+        var report = await _context.Reports
+            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .FirstOrDefaultAsync(r => r.IdPublication == id);
         return report ?? new Report();
     }
 
-    public async Task Add(Report report)
+    public async Task<Report> GetByUserId(int id)
     {
-        await _context.AddAsync(report);
+        var report = await _context.Reports
+            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .FirstOrDefaultAsync(r => r.IdUser == id);
+        return report ?? new Report();
     }
 
-    //! Se padra hacer un update a un reporte?
-    // public async Task Update(Report report)
-    // {
-    //     _context.Update(report);
-    // }
+    public async Task<Report> GeybyReportTypeId(int id)
+    {
+        var report = await _context.Reports
+            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .FirstOrDefaultAsync(r => r.IdReportType == id);
+        return report ?? new Report();
+    }
+
+    public async Task<Report> Add(Report report)
+    {
+        _context.Reports.Add(report);
+        await _context.SaveChangesAsync();
+        return report;
+    }
+
+    public async Task Update(Report report)
+    {
+        _context.Reports.Update(report);
+        await _context.SaveChangesAsync();
+    }
 
     public async Task Delete(int id)
     {
-        var report = await GetById(id);
-        _context.Reports.Remove(report);
+        var report = await _context.Reports
+            .FirstOrDefaultAsync(r => r.IdReport == id);
+        if (report != null)
+        {
+            _context.Reports.Remove(report);
+            await _context.SaveChangesAsync();
+        }
     }
 }

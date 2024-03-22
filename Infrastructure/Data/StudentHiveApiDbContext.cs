@@ -40,28 +40,27 @@ public partial class StudentHiveApiDbContext : DbContext
 
     public virtual DbSet<ReservationConfirmed> ReservationsConfirmed { get; set; }
 
-    public virtual DbSet<Rol> Rols { get; set; }
+    public virtual DbSet<Rol> Rol { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new EventSubscriptionsConfiguration());
+
         modelBuilder.ApplyConfiguration(new EventConfiguration());
+        modelBuilder.ApplyConfiguration(new EventSubscriptionsConfiguration());
         modelBuilder.ApplyConfiguration(new HouseServiceConfiguration());
         modelBuilder.ApplyConfiguration(new ImageConfiguration());
         modelBuilder.ApplyConfiguration(new LocationConfiguration());
         modelBuilder.ApplyConfiguration(new NotificationConfiguration());
-        modelBuilder.ApplyConfiguration(new RentalHouseDetailConfiguration());
         modelBuilder.ApplyConfiguration(new RentalHouseConfiguration());
-        modelBuilder.ApplyConfiguration(new ReportTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new RentalHouseDetailConfiguration());
         modelBuilder.ApplyConfiguration(new ReportConfiguration());
+        modelBuilder.ApplyConfiguration(new ReportTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RequestConfiguration());
         modelBuilder.ApplyConfiguration(new ReservationConfirmedConfiguration());
         modelBuilder.ApplyConfiguration(new RolConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-
-
         OnModelCreatingPartial(modelBuilder);
     }
 

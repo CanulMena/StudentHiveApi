@@ -31,11 +31,11 @@ public partial class User
 
     public virtual Rol? IdRolNavigation { get; set; }
 
-    public virtual ICollection<Notification> Notification { get; set; } = new List<Notification>();
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
-    public virtual ICollection<RentalHouse> RentalHouse { get; set; } = new List<RentalHouse>();
+    public virtual ICollection<RentalHouse> RentalHouses { get; set; } = new List<RentalHouse>();
 
-    public virtual ICollection<Report> Report { get; set; } = new List<Report>();
+    public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
 
-    public virtual ICollection<Request> Request { get; set; } = new List<Request>();
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

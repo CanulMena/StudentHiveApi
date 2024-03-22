@@ -15,11 +15,21 @@ public class ResponseMappingProfile : Profile
         // CreateMap<Location,HouseLocationDTO>();
         // CreateMap<RentalHouseDetail,RentalHouseDetailDTO>();
         // CreateMap<Image,ImageRentalHouseDTO>();
+        CreateMap<User, UserPublicationDto>()
+        .ForMember(dest => dest.publications, opt => opt.MapFrom(src => src.RentalHouses.Select(x => x).ToList()));
+        CreateMap<RentalHouse, publicationUserDto>()
+        .ForMember(dest => dest.FirstImage, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).FirstOrDefault()))
+        .ForMember(dest => dest.PublicationDate, opt => opt.MapFrom(src => src.PublicationDate))
+        .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication));
+
 
                 //Publication
         CreateMap<RentalHouse, PublicationDtos>()
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()))
         .ForMember(dest => dest.HouseLocation, opt => opt.MapFrom(src => src.IdLocationNavigation))
+        .ForMember(dest  => dest.Email, opt => opt.MapFrom(src => src.IdUserNavigation!.Email))
         .ForMember(dest => dest.NameofUser, opt => opt.MapFrom(src => src.IdUserNavigation!.Name));
 
         //RentalHouse 
@@ -28,7 +38,7 @@ public class ResponseMappingProfile : Profile
         .ForMember(dest => dest.IdLocationNavigation, opt => opt.MapFrom(src => src.IdLocationNavigation))
         .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
         .ForMember(dest => dest.IdRentalHouseDetailNavigation, opt => opt.MapFrom(src => src.IdRentalHouseDetailNavigation))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()));
+        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).ToList()));
 
         CreateMap<HouseService, HouseServiceDto>();
         CreateMap<Location, HouseLocationDto>();
@@ -48,27 +58,14 @@ public class ResponseMappingProfile : Profile
         .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublicationNavigation!.IdPublication));
 
         //ReportPublication
-
-        CreateMap<RentalHouse, RepotedPublicationDtos>()
+        CreateMap<Report, ReportDto>()
+        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
         .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication))
-        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
-        .ForMember(dest => dest.WebUser, opt => opt.MapFrom( src => src.IdUserNavigation))
-        .ForMember(dest => dest.IdReport, opt => opt.MapFrom( src => src.IdReport.Select(x => x.IdReport).ToList()));
-        // .ForMember(dest => dest.TypeReport, opt => opt.MapFrom( src => src.IdTypeReportNavigation));
+        .ForMember(dest => dest.IdReportType, opt => opt.MapFrom(src => src.IdTypeReport))
+        .ForMember(dest => dest.TypeReportName, opt => opt.MapFrom(src => src.IdTypeReportNavigation!.TypeReportName))
+        .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
 
-        CreateMap<RentalHouse, PublicationToBeAprovedDto>()
-        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication))
-        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-        .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Image.Select(x => x.UrlImageHouse).ToList()))
-        .ForMember(dest => dest.dateTime, opt => opt.MapFrom(src => src.PublicationDate))
-        .ForMember(dest => dest.WebLocationDtos, opt => opt.MapFrom(src => src.IdLocationNavigation))
-        .ForMember(dest => dest.WebUser, opt => opt.MapFrom(src => src.IdUserNavigation))
-        ; 
+        
 
-        CreateMap<Report, ReportDtos>();
-        CreateMap<ReportType,TypeReportDto>();
-        CreateMap<User, WebUserDtos>();
-        CreateMap<Location, WebLocationDtos>();
     }
 }

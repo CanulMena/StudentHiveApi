@@ -2,13 +2,16 @@ using AutoMapper;
 using StudentHive.Domain.Dtos;
 using StudentHive.Domain.Dtos.AdminDtos;
 using StudentHive.Domain.Entities;
+using StudentHive.Infrastructure.Repositories;
 
 namespace StudentHive.Services.Mappings;
 
 public class RequestCreateMappingProfile : Profile
 {
-    public RequestCreateMappingProfile()
-    {               
+    public RequestCreateMappingProfile()    
+    {  
+
+             
         CreateMap<UserCreateDTO, User>();
         // .ForMember(dest => dest.IdRol, opt => opt.MapFrom(src => 1));
         
@@ -35,7 +38,14 @@ public class RequestCreateMappingProfile : Profile
         (
             (src, dest) => 
                 {
-                    dest.Status = false ;
+                    dest.StatusRent = true;
+                }
+        )
+        .AfterMap
+        (
+            (src, dest) => 
+                {
+                    dest.Status = false;
                 }
         )
         .ForMember(dest => dest.IdHouseServiceNavigation, opt => opt.MapFrom(src => src.HouseService))
@@ -65,6 +75,18 @@ public class RequestCreateMappingProfile : Profile
             (src, dest) =>
             {
                 dest.Status = "Pendiente";
+            }
+        );
+
+        //ReportPublication
+        CreateMap<CreateReportDTO, Report>()
+        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.Idpublication))
+        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser))
+        .ForMember(dest => dest.IdTypeReport, opt => opt.MapFrom(src => src.IdReportType))
+        .AfterMap(
+            (src, dest ) =>
+            {
+                dest.CreatedAt = DateTime.Now;
             }
         );
     }

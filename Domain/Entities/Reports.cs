@@ -7,7 +7,7 @@ public partial class Report
 {
     public int IdReport { get; set; }
 
-    public int IdReportType { get; set; }
+    public int? IdTypeReport { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
@@ -17,7 +17,7 @@ public partial class Report
 
     public virtual RentalHouse? IdPublication1 { get; set; }
 
-    public virtual ReportType IdReportTypeNavigation { get; set; } = null!;
+    public virtual ReportType? IdTypeReportNavigation { get; set; }
 
     public virtual User? IdUserNavigation { get; set; }
 

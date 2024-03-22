@@ -45,6 +45,22 @@ public class UserRepository
         return user ?? new User();
     }
 
+    public async Task<User> GetUserByIdAndPublication(int idUser)
+    {
+        var user = await _context.Users
+            .Include(u => u.RentalHouses)
+            .ThenInclude(rh => rh.IdHouseServiceNavigation)
+            .Include(u => u.RentalHouses)
+            .ThenInclude(rh => rh.IdLocationNavigation)
+            .Include(u => u.RentalHouses)
+            .ThenInclude(rh => rh.IdRentalHouseDetailNavigation)
+            .Include(u => u.RentalHouses)
+            .ThenInclude(rh => rh.Images)
+            .FirstOrDefaultAsync(u => u.IdUser == idUser);
+
+        return user ?? new User();
+    }
+
     public async Task<User> GetUserByEmail(string email)
     {   //Le estoy pidiendo que me agregue tambien el rol 
         var user = await _context.Users

@@ -39,11 +39,11 @@ public partial class RentalHouse
 
     public virtual User? IdUserNavigation { get; set; }
 
-    public virtual ICollection<Image> Image { get; set; } = new List<Image>();
+    public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
-    public virtual ICollection<Report> Report { get; set; } = new List<Report>();
+    public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
 
-    public virtual ICollection<Request> Request { get; set; } = new List<Request>();
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     public virtual ICollection<Report> IdReport { get; set; } = new List<Report>();
 }

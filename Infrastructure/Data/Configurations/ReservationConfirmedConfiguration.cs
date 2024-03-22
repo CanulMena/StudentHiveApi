@@ -9,7 +9,7 @@ public class ReservationConfirmedConfiguration : IEntityTypeConfiguration<Reserv
     public void Configure(EntityTypeBuilder<ReservationConfirmed> builder)
     {
         builder.ToTable("ReservationsConfirmed");
-            builder.HasKey(e => e.IdRerservation).HasName("PK__Reservat__FD6D97917113C582");
+            builder.HasKey(e => e.IdRerservation).HasName("PK__Reservat__FD6D9791864CBFDD");
 
             builder.Property(e => e.IdRerservation).HasColumnName("ID_Rerservation");
             builder.Property(e => e.IdRequest).HasColumnName("ID_Request");
@@ -17,7 +17,7 @@ public class ReservationConfirmedConfiguration : IEntityTypeConfiguration<Reserv
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            builder.HasOne(d => d.IdRequestNavigation).WithMany(p => p.ReservationConfirmed)
+            builder.HasOne(d => d.IdRequestNavigation).WithMany(p => p.ReservationsConfirmed)
                 .HasForeignKey(d => d.IdRequest)
                 .HasConstraintName("FK__Reservati__ID_Re__6E01572D");
         

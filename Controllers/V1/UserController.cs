@@ -47,6 +47,18 @@ namespace StudentHive.Controllers.V1
             return Ok( UserToUserDto );
         }
 
+        [HttpGet("id/{id}/publication")]
+        public async Task<IActionResult> GetUserByIdAndPublication(int id)
+        {
+            var user = await _usersService.GetUserByIdAndPublication(id);
+            if (user.IdUser <= 0)
+            {
+                return NotFound();
+            }
+            var userDto = _mapper.Map<UserPublicationDto>(user);
+            return Ok(userDto);
+        }
+
         [Authorize(Policy = "Usuario")]
         [HttpGet("email/{email}")]
         public async Task<IActionResult> GetByEmail(string email)

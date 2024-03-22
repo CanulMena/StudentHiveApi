@@ -9,7 +9,7 @@ public class RentalHouseDetailConfiguration : IEntityTypeConfiguration<RentalHou
     public void Configure(EntityTypeBuilder<RentalHouseDetail> builder)
     {
         builder.ToTable("RentalHouseDetails");
-            builder.HasKey(e => e.IdRentalHouseDetail).HasName("PK__RentalHo__EDFA085E9B27860C");
+            builder.HasKey(e => e.IdRentalHouseDetail).HasName("PK__RentalHo__EDFA085EC299898F");
 
             builder.Property(e => e.IdRentalHouseDetail).HasColumnName("ID_RentalHouseDetail");
     }

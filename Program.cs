@@ -47,12 +47,15 @@ builder.Services.AddTransient<UserRepository>();
 builder.Services.AddScoped<RentalHouseService>();
 builder.Services.AddTransient<RentalHouseRepository>();
 
+//Report services
+builder.Services.AddScoped<ReportService>();
+builder.Services.AddTransient<ReportRepository>();
+
 // admin services
 // builder.Services.AddScoped<AdministradorService>();
 // builder.Services.AddTransient<AdministradorRepository>();
 
 //reportPublication services
-builder.Services.AddScoped<PublicationService>();
 builder.Services.AddTransient<PublicationReportRepository>();
 
 builder.Services.AddScoped<PasswordHasher>(); 

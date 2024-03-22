@@ -34,6 +34,11 @@ public class UsersService
 
     }
 
+    public async Task<User> GetUserByIdAndPublication(int idUser)
+    {
+        return await _UserRepository.GetUserByIdAndPublication(idUser);
+    }
+
     public async Task<string> AuthLogin(AuthLoginDTO authLogin)
     {
         if (authLogin.Email == null || authLogin.Password == null)

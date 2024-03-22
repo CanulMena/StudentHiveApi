@@ -108,7 +108,7 @@ public async Task<IActionResult> GetAllTruePublications(int pageNumber = 1, int 
             if (image?.Length > 0)
             {
                 var imageUrl = await _coudinaryRentalHouse.UploadImageAsync(image);
-                entity.Image.Add(new Image { UrlImageHouse = imageUrl });
+                entity.Images.Add(new Image { UrlImageHouse = imageUrl });
             }
         }
 
@@ -176,7 +176,7 @@ public async Task<IActionResult> GetAllTruePublications(int pageNumber = 1, int 
         }
     
         // Eliminar imágenes
-        foreach (var image in entity.Image)
+        foreach (var image in entity.Images)
         {
             try
             {

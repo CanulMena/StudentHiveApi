@@ -9,7 +9,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
-            builder.HasKey(e => e.IdUser).HasName("PK__Users__ED4DE4422E11A226");
+            builder.HasKey(e => e.IdUser).HasName("PK__Users__ED4DE442DDE35EB7");
 
             builder.Property(e => e.IdUser).HasColumnName("ID_User");
             builder.Property(e => e.Description).IsUnicode(false);
@@ -23,7 +23,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             builder.Property(e => e.ProfilePhotoUrl).IsUnicode(false);
             builder.Property(e => e.UserAge).HasColumnName("User_Age");
 
-            builder.HasOne(d => d.IdRolNavigation).WithMany(p => p.User)
+            builder.HasOne(d => d.IdRolNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRol)
                 .HasConstraintName("FK__Users__ID_Rol__3C69FB99");
     }

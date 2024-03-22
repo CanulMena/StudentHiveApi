@@ -9,7 +9,7 @@ public class ReportTypeConfiguration : IEntityTypeConfiguration<ReportType>
     public void Configure(EntityTypeBuilder<ReportType> builder)
     {
         builder.ToTable("ReportTypes");
-            builder.HasKey(e => e.IdTypeReport).HasName("PK__ReportTy__BA174E56D2AD5C54");
+            builder.HasKey(e => e.IdTypeReport).HasName("PK__ReportTy__BA174E563BF40B50");
 
             builder.Property(e => e.IdTypeReport).HasColumnName("ID_TypeReport");
             builder.Property(e => e.TypeReportName)

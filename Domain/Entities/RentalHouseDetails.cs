@@ -17,5 +17,5 @@ public partial class RentalHouseDetail
 
     public int? NumberOfHammocks { get; set; }
 
-    public virtual RentalHouse? RentalHouse { get; set; }
+    public virtual RentalHouse? RentalHouses { get; set; }
 }

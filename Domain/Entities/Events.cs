@@ -9,9 +9,9 @@ public partial class Event
 
     public string EventType { get; set; } = null!;
 
-    public virtual ICollection<EventSubscription> EventSubscription { get; set; } = new List<EventSubscription>();
+    public virtual ICollection<EventSubscription> EventSubscriptions { get; set; } = new List<EventSubscription>();
 
-    public virtual ICollection<Notification> Notification { get; set; } = new List<Notification>();
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
-    public virtual ICollection<Request> Request { get; set; } = new List<Request>();
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

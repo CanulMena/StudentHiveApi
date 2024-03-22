@@ -15,7 +15,7 @@ public class ReportRepository
     public async Task<IEnumerable<Report>> GetAll()
     {
         return await _context.Reports
-            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
             .ToListAsync();
@@ -24,41 +24,44 @@ public class ReportRepository
     public async Task<Report> GetById(int id)
     {
         var report = await _context.Reports
-            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
             .FirstOrDefaultAsync(r => r.IdReport == id);
         return report ?? new Report();
     }
     
-    public async Task<Report> GetByPublicationId(int id)
+    public async Task<List<Report>> GetByPublicationId(int id)
     {
-        var report = await _context.Reports
-            .Include(r => r.IdReportTypeNavigation)
+        var reports = await _context.Reports
+            .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
-            .FirstOrDefaultAsync(r => r.IdPublication == id);
-        return report ?? new Report();
+            .Where(r => r.IdPublication == id)
+            .ToListAsync();
+        return reports;
     }
 
-    public async Task<Report> GetByUserId(int id)
+    public async Task<List<Report>> GetByUserId(int id)
     {
         var report = await _context.Reports
-            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
-            .FirstOrDefaultAsync(r => r.IdUser == id);
-        return report ?? new Report();
+            .Where(r => r.IdUser == id)
+            .ToListAsync();
+        return report;
     }
 
-    public async Task<Report> GeybyReportTypeId(int id)
+    public async Task<List<Report>> GeybyReportTypeId(int id)
     {
         var report = await _context.Reports
-            .Include(r => r.IdReportTypeNavigation)
+            .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
-            .FirstOrDefaultAsync(r => r.IdReportType == id);
-        return report ?? new Report();
+            .Where(r => r.IdTypeReport == id)
+            .ToListAsync();
+        return report;
     }
 
     public async Task<Report> Add(Report report)

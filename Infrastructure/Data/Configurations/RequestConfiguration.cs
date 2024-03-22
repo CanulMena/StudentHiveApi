@@ -9,8 +9,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
     public void Configure(EntityTypeBuilder<Request> builder)
     {
         builder.ToTable("Requests");
-        builder.HasKey(e => e.IdRequest).HasName("PK__Requests__D5509880A1BE4613");
-            builder.HasKey(e => e.IdRequest).HasName("PK__Requests__D550988064070693");
+            builder.HasKey(e => e.IdRequest).HasName("PK__Requests__D550988056D089DF");
 
             builder.Property(e => e.IdRequest).HasColumnName("ID_Request");
             builder.Property(e => e.CreatedAt)
@@ -23,15 +22,15 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            builder.HasOne(d => d.IdEventNavigation).WithMany(p => p.Request)
+            builder.HasOne(d => d.IdEventNavigation).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.IdEvent)
                 .HasConstraintName("FK__Requests__ID_Eve__6383C8BA");
 
-            builder.HasOne(d => d.IdPublicationNavigation).WithMany(p => p.Request)
+            builder.HasOne(d => d.IdPublicationNavigation).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.IdPublication)
                 .HasConstraintName("FK__Requests__ID_Pub__628FA481");
 
-            builder.HasOne(d => d.IdUserNavigation).WithMany(p => p.Request)
+            builder.HasOne(d => d.IdUserNavigation).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.IdUser)
                 .HasConstraintName("FK__Requests__ID_Use__619B8048");
     }

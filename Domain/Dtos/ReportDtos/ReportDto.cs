@@ -6,5 +6,6 @@ public class ReportDto
     public int IdUser { get; set; }
     public int IdPublication { get; set; }
     public DateTime CreatedAt { get; set; }
-    public virtual ReportTypeDto? IdReportType { get; set; }
+    public int IdReportType { get; set; }
+    public string? TypeReportName { get; set; }
 }

@@ -9,5 +9,5 @@ public partial class ReportType
 
     public string? TypeReportName { get; set; }
 
-    public virtual ICollection<Report> Report { get; set; } = new List<Report>();
+    public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
 }

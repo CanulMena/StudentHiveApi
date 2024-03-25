@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "StudentHive/1.0.0": {
         "dependencies": {
+          "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CloudinaryDotNet": "1.25.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.2",

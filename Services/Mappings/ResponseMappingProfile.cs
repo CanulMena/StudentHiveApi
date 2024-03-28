@@ -59,13 +59,23 @@ public class ResponseMappingProfile : Profile
 
         //ReportPublication
         CreateMap<Report, ReportDto>()
-        .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUserNavigation!.IdUser))
-        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication))
+        .ForMember(dest => dest.IdUserNavigation, opt => opt.MapFrom(src => src.IdUserNavigation))
         .ForMember(dest => dest.IdReportType, opt => opt.MapFrom(src => src.IdTypeReport))
+        .ForMember(dest => dest.IdPublicationNavigation, opt => opt.MapFrom(src => src.IdPublication1))
         .ForMember(dest => dest.TypeReportName, opt => opt.MapFrom(src => src.IdTypeReportNavigation!.TypeReportName))
         .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+            
+        CreateMap<User, UserReportDto>();
+        CreateMap<RentalHouse, PublicationReportDto>()
+            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).FirstOrDefault()));
 
-        
+        CreateMap<RentalHouse, PublicationWithReportsDto>()
+        .ForMember(dest => dest.Reports, opt => opt.MapFrom(src => src.Reports))
+        .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Images.Select(x => x.UrlImageHouse).FirstOrDefault()))
+        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+        .ForMember(dest => dest.IdPublication, opt => opt.MapFrom(src => src.IdPublication));
 
+        CreateMap<Report, ReportsDto>()
+        .ForMember(dest => dest.TypeReportName, opt => opt.MapFrom(src => src.IdTypeReportNavigation!.TypeReportName));
     }
 }

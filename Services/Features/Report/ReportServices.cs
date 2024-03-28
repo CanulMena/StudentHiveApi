@@ -1,3 +1,4 @@
+using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
 using StudentHive.Infrastructure.Repositories;
 
@@ -12,6 +13,11 @@ public class ReportService
         this._reportRepository = reportRepository;
     }
 
+    public async Task<IEnumerable<Report>> GetAllFilter(QueryReport queryReport)
+    {
+        return await _reportRepository.GetAllFilter(queryReport);
+    }
+
     public async Task<IEnumerable<Report>> GetAll()
     {
         return await _reportRepository.GetAll();
@@ -22,25 +28,25 @@ public class ReportService
         return await _reportRepository.GetById(reportId);
     }
 
-public async Task<List<Report>> GetReportByPublicationId(int publicationId)
+public async Task<RentalHouse> GetReportByPublicationId(int publicationId)
 {
     return await _reportRepository.GetByPublicationId(publicationId);
 }
 
-    public async Task<List<Report>> GetReportByUserId(int userId)
-    {
-        return await _reportRepository.GetByUserId(userId);
-    }
+    // public async Task<List<Report>> GetReportByUserId(int userId)
+    // {
+    //     return await _reportRepository.GetByUserId(userId);
+    // }
 
-    public async Task<List<Report>> GetReportByReportTypeId(int reportTypeId)
-    {
-        return await _reportRepository.GeybyReportTypeId(reportTypeId);
-    }
+    // public async Task<List<Report>> GetReportByReportTypeId(int reportTypeId)
+    // {
+    //     return await _reportRepository.GeybyReportTypeId(reportTypeId);
+    // }
 
-    public async Task<Report> CreateReport(Report report)
-    {
-        return await _reportRepository.Add(report);
-    }
+    // public async Task<Report> CreateReport(Report report)
+    // {
+    //     return await _reportRepository.Add(report);
+    // }
 
 
 

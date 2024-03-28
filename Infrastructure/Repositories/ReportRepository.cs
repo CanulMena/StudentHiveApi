@@ -1,15 +1,34 @@
+using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
 
 namespace StudentHive.Infrastructure.Repositories;
 
-public class ReportRepository
+public partial class ReportRepository
 {
     private readonly StudentHiveApiDbContext _context;
 
     public ReportRepository(StudentHiveApiDbContext context)
     {
         _context = context;
+    }
+
+    public async Task<IEnumerable<Report>> GetAllFilter(QueryReport queryReport)
+    {
+        var query = _context.Reports
+            .Include(r => r.IdTypeReportNavigation)
+            .Include(r => r.IdUserNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .Include(r => r.IdPublication1)
+            .Include(r => r.IdPublication1!.Images)
+            .AsQueryable()
+            .ApplyFilter(queryReport);
+
+        var report = await query.ToListAsync();
+        return report;
     }
     
     public async Task<IEnumerable<Report>> GetAll()
@@ -18,6 +37,9 @@ public class ReportRepository
             .Include(r => r.IdTypeReportNavigation)
             .Include(r => r.IdUserNavigation)
             .Include(r => r.IdPublicationNavigation)
+            .Include(r => r.IdPublicationNavigation)
+            .Include(r => r.IdPublication1)
+            .Include(r => r.IdPublication1!.Images)
             .ToListAsync();
     }
 
@@ -31,38 +53,37 @@ public class ReportRepository
         return report ?? new Report();
     }
     
-    public async Task<List<Report>> GetByPublicationId(int id)
-    {
-        var reports = await _context.Reports
-            .Include(r => r.IdTypeReportNavigation)
-            .Include(r => r.IdUserNavigation)
-            .Include(r => r.IdPublicationNavigation)
-            .Where(r => r.IdPublication == id)
-            .ToListAsync();
-        return reports;
-    }
+public async Task<RentalHouse> GetByPublicationId(int id)
+{
+    var report = await _context.RentalHouses
+        .Include(r => r.Images)
+        .Include(r => r.Reports)
+        .ThenInclude(rep => rep.IdTypeReportNavigation)
+        .FirstOrDefaultAsync(r => r.IdPublication == id && r.Reports.Any(rep => rep.IdPublication == id));
+    return report ?? new RentalHouse();
+}
 
-    public async Task<List<Report>> GetByUserId(int id)
-    {
-        var report = await _context.Reports
-            .Include(r => r.IdTypeReportNavigation)
-            .Include(r => r.IdUserNavigation)
-            .Include(r => r.IdPublicationNavigation)
-            .Where(r => r.IdUser == id)
-            .ToListAsync();
-        return report;
-    }
+    // public async Task<List<Report>> GetByUserId(int id)
+    // {
+    //     var report = await _context.Reports
+    //         .Include(r => r.IdTypeReportNavigation)
+    //         .Include(r => r.IdUserNavigation)
+    //         .Include(r => r.IdPublicationNavigation)
+    //         .Where(r => r.IdUser == id)
+    //         .ToListAsync();
+    //     return report;
+    // }
 
-    public async Task<List<Report>> GeybyReportTypeId(int id)
-    {
-        var report = await _context.Reports
-            .Include(r => r.IdTypeReportNavigation)
-            .Include(r => r.IdUserNavigation)
-            .Include(r => r.IdPublicationNavigation)
-            .Where(r => r.IdTypeReport == id)
-            .ToListAsync();
-        return report;
-    }
+    // public async Task<List<Report>> GeybyReportTypeId(int id)
+    // {
+    //     var report = await _context.Reports
+    //         .Include(r => r.IdTypeReportNavigation)
+    //         .Include(r => r.IdUserNavigation)
+    //         .Include(r => r.IdPublicationNavigation)
+    //         .Where(r => r.IdTypeReport == id)
+    //         .ToListAsync();
+    //     return report;
+    // }
 
     public async Task<Report> Add(Report report)
     {

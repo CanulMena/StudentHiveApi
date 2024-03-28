@@ -119,4 +119,40 @@ public static class QueryExtensions
         
         return query;
     }
+
+    public static IQueryable<Report> ApplyFilter(this IQueryable<Report> query, QueryReport filter)
+    {
+
+        if (filter.BelowDatePublication > DateTime.UnixEpoch)
+        {
+            query = query.Where(r => r.CreatedAt <= filter.BelowDatePublication);
+        }
+
+        if (filter.OverDatePublication > DateTime.UnixEpoch)
+        {
+            query = query.Where(r => r.CreatedAt >= filter.OverDatePublication);
+        }
+
+        if (filter.IdPublication > 0)
+        {
+            query = query.Where(r => r.IdPublication == filter.IdPublication);
+        }
+
+        if (filter.IdTypeReport > 0)
+        {
+            query = query.Where(r => r.IdTypeReport == filter.IdTypeReport);
+        }
+
+        if (filter.IdUser > 0)
+        {
+            query = query.Where(r => r.IdUser == filter.IdUser);
+        }
+
+        if(!string.IsNullOrWhiteSpace(filter.TypeReportName))
+        {
+            query = query.Where(r => r.IdTypeReportNavigation!.TypeReportName!.Contains(filter.TypeReportName));
+        }
+
+        return query;
+    }
 }

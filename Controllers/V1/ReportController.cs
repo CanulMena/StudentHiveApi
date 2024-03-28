@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using StudentHive.Domain.Dtos;
+using StudentHive.Domain.Dtos.QueryFilters;
 using StudentHive.Domain.Entities;
 using StudentHive.Services.Features.Reports;
 
@@ -17,6 +18,14 @@ public class ReportController : ControllerBase
     {
         this._reportService = reportService;
         this._mapper = mapper;
+    }
+
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetAllFilter([FromQuery] QueryReport queryReport)
+    {
+        var reports = await _reportService.GetAllFilter(queryReport);
+        var reportDtos = _mapper.Map<IEnumerable<ReportDto>>(reports);
+        return Ok(reportDtos);
     }
 
     [HttpGet]
@@ -38,52 +47,53 @@ public class ReportController : ControllerBase
         var reportDto = _mapper.Map<ReportDto>(report);
         return Ok(reportDto);
     }
+
     [HttpGet("publication/{publicationId}")]
     public async Task<IActionResult> GetReportByPublicationId(int publicationId)
     {
         var reports = await _reportService.GetReportByPublicationId(publicationId);
-        if (!reports.Any())
+        if (reports.IdPublication <= 0)
         {
             return NotFound();
         }
-        var reportDtos = _mapper.Map<List<ReportDto>>(reports);
+        var reportDtos = _mapper.Map<PublicationWithReportsDto>(reports);
         return Ok(reportDtos);
     }
 
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetReportByUserId(int userId)
-    {
-        var reports = await _reportService.GetReportByUserId(userId);
-        if (!reports.Any())
-        {
-            return NotFound();
-        }
-        var reportDtos = _mapper.Map<List<ReportDto>>(reports);
-        return Ok(reportDtos);
-    }
+    // [HttpGet("user/{userId}")]
+    // public async Task<IActionResult> GetReportByUserId(int userId)
+    // {
+    //     var reports = await _reportService.GetReportByUserId(userId);
+    //     if (!reports.Any())
+    //     {
+    //         return NotFound();
+    //     }
+    //     var reportDtos = _mapper.Map<List<ReportDto>>(reports);
+    //     return Ok(reportDtos);
+    // }
     
-    [HttpGet("reportType/{reportTypeId}")]
-    public async Task<IActionResult> GetReportByReportTypeId(int reportTypeId)
-    {
-        var reports = await _reportService.GetReportByReportTypeId(reportTypeId);
-        if (!reports.Any())
-        {
-            return NotFound();
-        }
-        var reportDtos = _mapper.Map<List<ReportDto>>(reports);
-        return Ok(reportDtos);
-    }
+    // [HttpGet("reportType/{reportTypeId}")]
+    // public async Task<IActionResult> GetReportByReportTypeId(int reportTypeId)
+    // {
+    //     var reports = await _reportService.GetReportByReportTypeId(reportTypeId);
+    //     if (!reports.Any())
+    //     {
+    //         return NotFound();
+    //     }
+    //     var reportDtos = _mapper.Map<List<ReportDto>>(reports);
+    //     return Ok(reportDtos);
+    // }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateReport([FromQuery]CreateReportDTO createReportDTO)
-    {
-        var Entity = _mapper.Map<Report>(createReportDTO);
-        await _reportService.CreateReport(Entity);
+    // [HttpPost]
+    // public async Task<IActionResult> CreateReport([FromQuery]CreateReportDTO createReportDTO)
+    // {
+    //     var Entity = _mapper.Map<Report>(createReportDTO);
+    //     await _reportService.CreateReport(Entity);
 
-        var reportDto = _mapper.Map<ReportDto>(Entity);
+    //     var reportDto = _mapper.Map<ReportDto>(Entity);
 
-        return CreatedAtAction(nameof(GetById), new { reportId = reportDto.IdReport }, reportDto);
-    }
+    //     return CreatedAtAction(nameof(GetById), new { reportId = reportDto.IdReport }, reportDto);
+    // }
 
     // [HttpPut]
     // public async Task<IActionResult> UpdateReport([FromBody] UpdateReportDTO reportDto)
